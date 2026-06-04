@@ -1,19 +1,19 @@
 :root {
-    --primary: #1B8F6E;
-    --primary-light: #2aad88;
-    --primary-dark: #147a5d;
-    --accent: #00C896;
-    --accent-light: #e6faf4;
-    --accent-dark: #00a67b;
-    --bg: #F7FAF9;
+    --primary: #4a5568;
+    --primary-light: #5a6a7e;
+    --primary-dark: #3a4558;
+    --accent: #6b7fe6;
+    --accent-light: #8b9bef;
+    --accent-dark: #5568d4;
+    --bg: #f9fafb;
     --bg-card: #FFFFFF;
     --bg-sidebar: #FFFFFF;
-    --text-primary: #2d3436;
+    --text-primary: #2d3748;
     --text-secondary: #636e72;
-    --text-light: #a0aaa7;
+    --text-light: #a0aec0;
     --text-white: #FFFFFF;
-    --border: #e8f0ed;
-    --border-focus: #00C896;
+    --border: #edf2f7;
+    --border-focus: #6b7fe6;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -21,9 +21,9 @@
     --radius-md: 14px;
     --radius-lg: 18px;
     --transition: all 0.2s ease;
-    --pastel-green: #e6faf4;
-    --pastel-mint: #f0fdf9;
-    --pastel-blue: #f0f7ff;
+    --pastel-green: #eef2ff;
+    --pastel-mint: #f5f7ff;
+    --pastel-blue: #f0f4ff;
 }
 
 * {
@@ -71,7 +71,7 @@ body {
 }
 
 .logo-img {
-    height: 32px;
+    height: 28px;
     width: auto;
 }
 
@@ -83,12 +83,14 @@ body {
 }
 
 .logo-sub {
-    font-size: 0.75rem;
-    color: var(--accent);
+    font-size: 0.7rem;
+    color: var(--text-white);
     font-weight: 600;
-    background: var(--pastel-green);
+    background: var(--primary);
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Step Navigation */
@@ -486,14 +488,14 @@ textarea::placeholder {
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: var(--accent);
     color: var(--text-white);
-    box-shadow: 0 2px 8px rgba(27, 143, 110, 0.2);
+    box-shadow: 0 2px 8px rgba(107, 127, 230, 0.25);
 }
 
 .btn-primary:hover {
-    background: var(--primary-light);
-    box-shadow: 0 4px 14px rgba(27, 143, 110, 0.3);
+    background: var(--accent-dark);
+    box-shadow: 0 4px 14px rgba(107, 127, 230, 0.35);
 }
 
 .btn-secondary {
@@ -514,7 +516,7 @@ textarea::placeholder {
 
 .btn-success {
     background: var(--accent);
-    color: var(--primary-dark);
+    color: white;
     font-weight: 600;
 }
 
