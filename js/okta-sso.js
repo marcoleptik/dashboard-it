@@ -8,7 +8,15 @@ const OKTA_CONFIG = {
     clientId: '0oak5qmvc2PvJUdAF0i7',
     redirectUri: window.location.origin + window.location.pathname,
     scopes: ['openid', 'profile', 'email'],
+    // Utiliser 'default' pour le Custom Authorization Server, ou '' pour le Org Authorization Server
+    authServerId: 'default',
 };
+
+function getAuthBaseUrl() {
+    return OKTA_CONFIG.authServerId
+        ? `${OKTA_CONFIG.orgUrl}/oauth2/${OKTA_CONFIG.authServerId}/v1`
+        : `${OKTA_CONFIG.orgUrl}/oauth2/v1`;
+}
 
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
 const OKTA_SESSION_KEY = 'onboarding_okta_session';
@@ -63,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         sessionStorage.setItem('okta_state', state);
         sessionStorage.setItem('okta_code_verifier', codeVerifier);
 
-        const authUrl = `${OKTA_CONFIG.orgUrl}/oauth2/default/v1/authorize?` +
+        const authUrl = `${getAuthBaseUrl()}/authorize?` +
             `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
             `&response_type=code` +
             `&scope=${encodeURIComponent(OKTA_CONFIG.scopes.join(' '))}` +
@@ -93,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             // Échanger le code contre des tokens
-            const tokenResponse = await fetch(`${OKTA_CONFIG.orgUrl}/oauth2/default/v1/token`, {
+            const tokenResponse = await fetch(`${getAuthBaseUrl()}/token`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -167,7 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function oktaLogout() {
         localStorage.removeItem(OKTA_SESSION_KEY);
         // Redirect to Okta logout
-        const logoutUrl = `${OKTA_CONFIG.orgUrl}/oauth2/default/v1/logout?` +
+        const logoutUrl = `${getAuthBaseUrl()}/logout?` +
             `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
             `&post_logout_redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
         window.location.href = logoutUrl;
