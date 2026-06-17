@@ -8,10 +8,11 @@ const OKTA_CONFIG = {
     orgUrl: 'https://login.recommerce.com',
     clientId: '0oak5r1481CKBgoeM0i7',
     redirectUri: window.location.origin + window.location.pathname,
-    scopes: ['openid', 'email'],
+    scopes: ['openid', 'email', 'groups'],
 };
 
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
+const ADMIN_GROUP = 'SysOps';
 const OKTA_SESSION_KEY = 'onboarding_okta_session';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -152,9 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Créer la session
+            const userGroups = payload.groups || [];
+            const isAdmin = userGroups.includes(ADMIN_GROUP);
             const session = {
                 email: payload.email,
                 name: payload.name || payload.preferred_username || payload.email,
+                role: isAdmin ? 'admin' : 'member',
+                groups: userGroups,
                 loggedAt: Date.now(),
                 expiresAt: payload.exp * 1000,
             };
@@ -176,14 +181,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const sidebarFooter = document.querySelector('.sidebar-footer');
         if (sidebarFooter) {
+            const adminLink = session.role === 'admin'
+                ? `<a href="admin.html" class="sidebar-link"><span class="material-icons">dashboard</span><span>Dashboard Admin</span></a>`
+                : '';
             sidebarFooter.innerHTML = `
                 <div class="sso-user-info">
                     <span class="material-icons sso-avatar-icon">account_circle</span>
                     <div class="sso-user-details">
                         <span class="sso-user-name">${escapeHtml(session.name)}</span>
-                        <span class="sso-user-email">${escapeHtml(session.email)}</span>
+                        <span class="sso-user-email">${escapeHtml(session.email)}${session.role === 'admin' ? ' (admin)' : ''}</span>
                     </div>
                 </div>
+                ${adminLink}
                 <button class="sidebar-link" id="sso-logout">
                     <span class="material-icons">logout</span>
                     <span>Déconnexion</span>

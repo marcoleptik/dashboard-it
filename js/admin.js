@@ -1,12 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Check auth
-    if (!Auth.requireAuth()) return;
+    // Check auth - support both legacy Auth and Okta SSO session
+    const oktaSession = localStorage.getItem('onboarding_okta_session');
+    let session;
 
-    const session = Auth.getSession();
-    document.getElementById('admin-user-name').textContent = session.name;
+    if (oktaSession) {
+        session = JSON.parse(oktaSession);
+        if (session.role !== 'admin') {
+            alert('Accès réservé aux administrateurs.');
+            window.location.href = 'index.html';
+            return;
+        }
+    } else if (Auth && Auth.isLoggedIn()) {
+        session = Auth.getSession();
+        if (session.role !== 'admin') {
+            alert('Accès réservé aux administrateurs.');
+            window.location.href = 'index.html';
+            return;
+        }
+    } else {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    document.getElementById('admin-user-name').textContent = session.name || session.email;
 
     // Logout
-    document.getElementById('btn-logout').addEventListener('click', () => Auth.logout());
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        localStorage.removeItem('onboarding_okta_session');
+        if (Auth && Auth.isLoggedIn()) Auth.logout();
+        else window.location.href = 'index.html';
+    });
 
     // Admin-only features
     if (session.role === 'admin') {
