@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.setItem('okta_state', state);
         sessionStorage.setItem('okta_nonce', nonce);
 
-        const authUrl = `${OKTA_CONFIG.orgUrl}/oauth2/v1/authorize?` +
+        const authUrl = `${OKTA_CONFIG.orgUrl}/oauth2/default/v1/authorize?` +
             `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
             `&response_type=id_token` +
             `&scope=${encodeURIComponent(OKTA_CONFIG.scopes.join(' '))}` +
