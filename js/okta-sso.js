@@ -9,7 +9,7 @@ const OKTA_CONFIG = {
     redirectUri: window.location.origin + window.location.pathname,
     scopes: ['openid', 'profile', 'email'],
     // Utiliser 'default' pour le Custom Authorization Server, ou '' pour le Org Authorization Server
-    authServerId: '',
+    authServerId: 'default',
 };
 
 function getAuthBaseUrl() {
@@ -110,7 +110,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             // Échanger le code contre des tokens
-            const tokenResponse = await fetch(`${getAuthBaseUrl()}/token`, {
+            const tokenUrl = `${getAuthBaseUrl()}/token`;
+            console.log('Token exchange URL:', tokenUrl);
+            const tokenResponse = await fetch(tokenUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -124,7 +126,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!tokenResponse.ok) {
                 const errData = await tokenResponse.json().catch(() => ({}));
-                throw new Error(errData.error_description || 'Erreur lors de l\'échange du token');
+                console.error('Token exchange error:', errData);
+                throw new Error(errData.error_description || errData.error || `Token exchange failed (${tokenResponse.status})`);
             }
 
             const tokens = await tokenResponse.json();
@@ -151,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             sessionStorage.removeItem('okta_login_attempted');
             showApp(session);
         } catch (err) {
-            errorEl.textContent = 'Erreur lors de l\'authentification. Veuillez réessayer.';
+            errorEl.textContent = err.message || 'Erreur lors de l\'authentification.';
             errorEl.style.display = 'block';
             ssoGate.style.display = 'flex';
             console.error('Okta OIDC Error:', err);
