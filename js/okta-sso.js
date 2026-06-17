@@ -9,7 +9,7 @@ const OKTA_CONFIG = {
     redirectUri: window.location.origin + window.location.pathname,
     scopes: ['openid', 'profile', 'email'],
     // Utiliser 'default' pour le Custom Authorization Server, ou '' pour le Org Authorization Server
-    authServerId: '',
+    authServerId: 'default',
 };
 
 function getAuthBaseUrl() {
