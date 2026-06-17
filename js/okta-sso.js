@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 3. Auto-login (première visite ou arrivée depuis dashboard Okta)
-    if (!sessionStorage.getItem('okta_login_attempted')) {
+    // 3. Auto-login uniquement si on arrive depuis le dashboard Okta (paramètre iss)
+    if (issParam && !sessionStorage.getItem('okta_login_attempted')) {
         sessionStorage.setItem('okta_login_attempted', '1');
         startOktaLogin();
         return;
