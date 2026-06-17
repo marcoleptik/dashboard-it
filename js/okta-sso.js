@@ -90,19 +90,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startOktaLogin() {
-        const state = generateRandomString(32);
-        const nonce = generateRandomString(32);
-        sessionStorage.setItem('okta_state', state);
-        sessionStorage.setItem('okta_nonce', nonce);
+        try {
+            const state = generateRandomString(32);
+            const nonce = generateRandomString(32);
+            sessionStorage.setItem('okta_state', state);
+            sessionStorage.setItem('okta_nonce', nonce);
 
-        const authUrl = `${OKTA_CONFIG.orgUrl}/oauth2/default/v1/authorize?` +
-            `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
-            `&response_type=id_token` +
-            `&scope=${encodeURIComponent(OKTA_CONFIG.scopes.join(' '))}` +
-            `&redirect_uri=${encodeURIComponent(OKTA_CONFIG.redirectUri)}` +
-            `&state=${encodeURIComponent(state)}` +
-            `&nonce=${encodeURIComponent(nonce)}` +
-            `&response_mode=fragment`;
+            const redirectUri = window.location.origin + window.location.pathname;
+
+            // Essayer d'abord avec le custom domain, fallback sur okta-emea
+            const authUrl = `https://recommerce.okta-emea.com/oauth2/default/v1/authorize?` +
+                `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
+                `&response_type=id_token` +
+                `&scope=${encodeURIComponent(OKTA_CONFIG.scopes.join(' '))}` +
+                `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+                `&state=${encodeURIComponent(state)}` +
+                `&nonce=${encodeURIComponent(nonce)}` +
+                `&response_mode=fragment`;
+
+            console.log('[SSO] Redirecting to:', authUrl);
+            window.location.href = authUrl;
+        } catch (err) {
+            console.error('[SSO] startOktaLogin error:', err);
+            alert('Erreur SSO: ' + err.message);
+        }
+    }
 
         window.location.href = authUrl;
     }
