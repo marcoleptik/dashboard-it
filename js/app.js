@@ -399,6 +399,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = collectFormData();
         console.log('Form submitted:', formData);
         
+        // Save submission
+        if (typeof Submissions !== 'undefined') {
+            Submissions.add(formData);
+        }
+
         // Show success
         const container = document.querySelector('.form-container');
         container.innerHTML = `

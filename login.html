@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Onboarding RS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="assets/rs_logo.jpg" alt="Recommerce" class="login-logo">
+                <h1>Onboarding RS</h1>
+                <p>Connectez-vous pour accéder aux résultats</p>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required placeholder="votre@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Mot de passe</label>
+                    <div class="password-field">
+                        <input type="password" id="login-password" name="password" required placeholder="Votre mot de passe" autocomplete="current-password">
+                        <button type="button" class="toggle-password" aria-label="Afficher le mot de passe">
+                            <span class="material-icons">visibility_off</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="login-error" class="login-error" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span class="material-icons">login</span> Se connecter
+                </button>
+            </form>
+            <div class="login-footer">
+                <a href="index.html">← Retour au formulaire d'onboarding</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+</body>
+</html>
