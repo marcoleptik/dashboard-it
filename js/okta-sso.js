@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const payload = decodeJwtPayload(idToken);
-
+            console.log('[SSO] Token payload:', payload);
+            console.log('[SSO] Groups in token:', payload.groups);
             // Vérifier le nonce
             const savedNonce = sessionStorage.getItem('okta_nonce');
             if (payload.nonce !== savedNonce) {
