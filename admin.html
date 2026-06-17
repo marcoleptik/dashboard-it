@@ -4,47 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Onboarding RS</title>
-    <link rel="stylesheet" href="css/style.css?v=12">
+    <link rel="stylesheet" href="css/style.css?v=15">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class="admin-page">
-    <div class="admin-container">
-        <!-- Top bar -->
-        <header class="admin-header">
-            <div class="admin-header-left">
-                <a href="index.html" class="btn-back-admin" title="Retour à l'accueil">
-                    <span class="material-icons">arrow_back</span>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="assets/rs_logo.jpg" alt="Recommerce" class="logo-img">
+                <span class="logo-sub">Admin</span>
+            </div>
+            <nav class="step-nav">
+                <ul id="admin-nav-list">
+                    <li class="step-item active" data-tab="onboarding">
+                        <span class="material-icons step-icon">description</span>
+                        <span class="step-label">Onboarding</span>
+                    </li>
+                    <li class="step-item restricted-tab" data-tab="licences" style="display:none;">
+                        <span class="material-icons step-icon">vpn_key</span>
+                        <span class="step-label">Licences</span>
+                    </li>
+                    <li class="step-item restricted-tab" data-tab="stock-pc" style="display:none;">
+                        <span class="material-icons step-icon">computer</span>
+                        <span class="step-label">Stock PC</span>
+                    </li>
+                    <li class="step-item restricted-tab" data-tab="fiscalite" style="display:none;">
+                        <span class="material-icons step-icon">account_balance</span>
+                        <span class="step-label">Fiscalité</span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user-email" id="sidebar-user-email"></div>
+                <a href="index.html" class="sidebar-link">
+                    <span class="material-icons">home</span>
+                    <span>Retour à l'accueil</span>
                 </a>
-                <img src="assets/rs_logo.jpg" alt="Recommerce" class="admin-logo">
-                <h1>Dashboard Admin</h1>
+                <a href="#" class="sidebar-link" id="btn-logout">
+                    <span class="material-icons">logout</span>
+                    <span>Déconnexion</span>
+                </a>
             </div>
-            <div class="admin-header-right">
-                <span class="admin-user" id="admin-user-name"></span>
-                <button class="btn btn-secondary btn-sm" id="btn-logout">
-                    <span class="material-icons">logout</span> Déconnexion
-                </button>
-            </div>
-        </header>
-
-        <!-- Tabs navigation -->
-        <nav class="admin-tabs" id="admin-tabs">
-            <button class="tab-btn active" data-tab="onboarding">
-                <span class="material-icons">description</span> Onboarding
-            </button>
-            <button class="tab-btn restricted-tab" data-tab="licences" style="display:none;">
-                <span class="material-icons">vpn_key</span> Licences
-            </button>
-            <button class="tab-btn restricted-tab" data-tab="stock-pc" style="display:none;">
-                <span class="material-icons">computer</span> Stock PC
-            </button>
-            <button class="tab-btn restricted-tab" data-tab="fiscalite" style="display:none;">
-                <span class="material-icons">account_balance</span> Fiscalité
-            </button>
-        </nav>
+        </aside>
 
         <!-- Main content -->
-        <main class="admin-main">
+        <main class="main-content admin-main-content">
 
             <!-- TAB: Onboarding -->
             <div class="tab-content active" id="tab-onboarding">
@@ -292,23 +298,23 @@
             </div>
 
         </main>
+    </div>
 
-        <!-- Detail modal -->
-        <div class="modal-overlay" id="detail-modal" style="display:none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Détail de la soumission</h2>
-                    <button class="modal-close" id="modal-close">
-                        <span class="material-icons">close</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modal-body">
-                </div>
+    <!-- Detail modal -->
+    <div class="modal-overlay" id="detail-modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Détail de la soumission</h2>
+                <button class="modal-close" id="modal-close">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
             </div>
         </div>
     </div>
 
-    <script src="js/auth.js?v=11"></script>
-    <script src="js/admin.js?v=11"></script>
+    <script src="js/auth.js?v=12"></script>
+    <script src="js/admin.js?v=12"></script>
 </body>
 </html>

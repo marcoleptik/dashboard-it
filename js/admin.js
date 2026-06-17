@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    document.getElementById('admin-user-name').textContent = session.name || session.email;
+    document.getElementById('sidebar-user-email').textContent = session.email || '';
 
     // Logout
-    document.getElementById('btn-logout').addEventListener('click', () => {
+    document.getElementById('btn-logout').addEventListener('click', (e) => {
+        e.preventDefault();
         localStorage.removeItem('onboarding_okta_session');
         if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) Auth.logout();
         else window.location.href = 'index.html';
@@ -42,17 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasRestrictedAccess = RESTRICTED_EMAILS.includes((session.email || '').toLowerCase());
     if (hasRestrictedAccess) {
         document.querySelectorAll('.restricted-tab').forEach(tab => {
-            tab.style.display = 'inline-flex';
+            tab.style.display = 'flex';
         });
     }
 
-    // ===== Tab Navigation =====
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tabId = btn.dataset.tab;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // ===== Tab Navigation (sidebar) =====
+    document.querySelectorAll('#admin-nav-list .step-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const tabId = item.dataset.tab;
+            document.querySelectorAll('#admin-nav-list .step-item').forEach(i => i.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
+            item.classList.add('active');
             const content = document.getElementById('tab-' + tabId);
             if (content) content.classList.add('active');
         });

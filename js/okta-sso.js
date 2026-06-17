@@ -237,6 +237,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 materialBtn.addEventListener('click', () => {
                     homeScreen.style.display = 'none';
                     materialContainer.style.display = 'flex';
+                    // Populate material sidebar footer with user info
+                    const matSidebarFooter = materialContainer.querySelector('.sidebar-footer');
+                    if (matSidebarFooter) {
+                        matSidebarFooter.innerHTML = `
+                            <div class="sso-user-info">
+                                <span class="material-icons sso-avatar-icon">account_circle</span>
+                                <div class="sso-user-details">
+                                    <span class="sso-user-name">${escapeHtml(session.name)}</span>
+                                    <span class="sso-user-email">${escapeHtml(session.email)}</span>
+                                </div>
+                            </div>
+                            <a href="#" class="sidebar-link btn-back-home"><span class="material-icons">home</span><span>Retour à l'accueil</span></a>
+                        `;
+                        matSidebarFooter.querySelector('.btn-back-home').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            materialContainer.style.display = 'none';
+                            homeScreen.style.display = 'flex';
+                        });
+                    }
                 });
             }
 
