@@ -180,6 +180,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showApp(session) {
         ssoGate.style.display = 'none';
+
+        // If home screen exists, show it instead of app directly
+        const homeScreen = document.getElementById('home-screen');
+        if (homeScreen) {
+            homeScreen.style.display = 'flex';
+            appContainer.style.display = 'none';
+
+            // Show user info
+            const userInfo = document.getElementById('home-user-info');
+            if (userInfo) {
+                userInfo.innerHTML = `
+                    <span class="material-icons">account_circle</span>
+                    <span>${escapeHtml(session.name)} — ${escapeHtml(session.email)}</span>
+                `;
+            }
+
+            // Show admin button if admin
+            if (session.role === 'admin') {
+                const adminBtn = document.getElementById('btn-go-admin');
+                if (adminBtn) adminBtn.style.display = 'inline-flex';
+            }
+
+            // Onboarding button → show form
+            const onboardingBtn = document.getElementById('btn-go-onboarding');
+            if (onboardingBtn) {
+                onboardingBtn.addEventListener('click', () => {
+                    homeScreen.style.display = 'none';
+                    appContainer.style.display = 'flex';
+                    // Populate sidebar footer with user info
+                    const sidebarFooter = document.querySelector('.sidebar-footer');
+                    if (sidebarFooter) {
+                        const backLink = `<a href="#" class="sidebar-link" id="btn-back-home"><span class="material-icons">home</span><span>Retour à l'accueil</span></a>`;
+                        sidebarFooter.innerHTML = `
+                            <div class="sso-user-info">
+                                <span class="material-icons sso-avatar-icon">account_circle</span>
+                                <div class="sso-user-details">
+                                    <span class="sso-user-name">${escapeHtml(session.name)}</span>
+                                    <span class="sso-user-email">${escapeHtml(session.email)}</span>
+                                </div>
+                            </div>
+                            ${backLink}
+                        `;
+                        document.getElementById('btn-back-home').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            appContainer.style.display = 'none';
+                            homeScreen.style.display = 'flex';
+                        });
+                    }
+                });
+            }
+
+            // Back to home from sidebar (initial static link)
+            const backBtn = document.getElementById('btn-back-home');
+            if (backBtn) {
+                backBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    appContainer.style.display = 'none';
+                    homeScreen.style.display = 'flex';
+                });
+            }
+
+            // Logout from home screen
+            const homeLogout = document.getElementById('home-logout');
+            if (homeLogout) {
+                homeLogout.addEventListener('click', oktaLogout);
+            }
+
+            return;
+        }
+
+        // Fallback: no home screen, show app directly
         appContainer.style.display = 'flex';
 
         const sidebarFooter = document.querySelector('.sidebar-footer');

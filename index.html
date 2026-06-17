@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Onboarding RS - Ouverture des droits d'accès</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=13">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -20,6 +20,29 @@
             </button>
             <div id="sso-error" class="login-error" style="display:none;"></div>
             <p class="sso-hint">Seules les adresses <strong>@recommerce.com</strong> et <strong>@circularx.com</strong> sont autorisées</p>
+        </div>
+    </div>
+
+    <!-- Home Screen (after login) -->
+    <div class="home-screen" id="home-screen" style="display:none;">
+        <div class="home-card">
+            <img src="assets/rs_logo.jpg" alt="Recommerce" class="login-logo">
+            <h1>Bienvenue sur l'Onboarding RS</h1>
+            <p class="home-subtitle">Que souhaitez-vous faire ?</p>
+            <div class="home-actions">
+                <button class="btn btn-primary btn-home" id="btn-go-onboarding">
+                    <span class="material-icons">description</span>
+                    Formulaire d'onboarding
+                </button>
+                <a href="admin.html" class="btn btn-primary btn-home" id="btn-go-admin" style="display:none;">
+                    <span class="material-icons">dashboard</span>
+                    Dashboard Admin
+                </a>
+            </div>
+            <div class="home-user-info" id="home-user-info"></div>
+            <button class="btn btn-outline btn-home-logout" id="home-logout">
+                <span class="material-icons">logout</span> Déconnexion
+            </button>
         </div>
     </div>
 
@@ -59,9 +82,9 @@
                 </ul>
             </nav>
             <div class="sidebar-footer">
-                <a href="login.html" class="sidebar-link">
-                    <span class="material-icons">lock</span>
-                    <span>Espace membre</span>
+                <a href="#" class="sidebar-link" id="btn-back-home">
+                    <span class="material-icons">home</span>
+                    <span>Retour à l'accueil</span>
                 </a>
             </div>
         </aside>
@@ -499,7 +522,7 @@
     </div>
 
     <script src="js/auth.js?v=6"></script>
-    <script src="js/okta-sso.js?v=11"></script>
+    <script src="js/okta-sso.js?v=13"></script>
     <script src="js/app.js?v=6"></script>
 </body>
 </html>
