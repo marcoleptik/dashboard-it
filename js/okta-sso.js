@@ -8,11 +8,13 @@ const OKTA_CONFIG = {
     orgUrl: 'https://login.recommerce.com',
     clientId: '0oak5r1481CKBgoeM0i7',
     redirectUri: window.location.origin + window.location.pathname,
-    scopes: ['openid', 'email', 'groups'],
+    scopes: ['openid', 'email', 'profile'],
 };
 
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
-const ADMIN_GROUP = 'SysOps';
+const ADMIN_EMAILS = [
+    'marc.huteau@recommerce.com',
+];
 const OKTA_SESSION_KEY = 'onboarding_okta_session';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -154,13 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Créer la session
-            const userGroups = payload.groups || [];
-            const isAdmin = userGroups.includes(ADMIN_GROUP);
+            const isAdmin = ADMIN_EMAILS.includes(payload.email.toLowerCase());
             const session = {
                 email: payload.email,
                 name: payload.name || payload.preferred_username || payload.email,
                 role: isAdmin ? 'admin' : 'member',
-                groups: userGroups,
                 loggedAt: Date.now(),
                 expiresAt: payload.exp * 1000,
             };
