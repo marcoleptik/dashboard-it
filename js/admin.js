@@ -1,3 +1,10 @@
+// Emails ayant accès aux onglets restreints (Licences, Stock PC, Fiscalité)
+const RESTRICTED_EMAILS = [
+    'marc.huteau@recommerce.com',
+    'gael.donat@recommerce.com',
+    'ange.bayoro@recommerce.com',
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     // Check auth - support both legacy Auth and Okta SSO session
     const oktaSession = localStorage.getItem('onboarding_okta_session');
@@ -10,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
             return;
         }
-    } else if (Auth && Auth.isLoggedIn()) {
+    } else if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) {
         session = Auth.getSession();
         if (session.role !== 'admin') {
             alert('Accès réservé aux administrateurs.');
@@ -27,23 +34,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout
     document.getElementById('btn-logout').addEventListener('click', () => {
         localStorage.removeItem('onboarding_okta_session');
-        if (Auth && Auth.isLoggedIn()) Auth.logout();
+        if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) Auth.logout();
         else window.location.href = 'index.html';
     });
 
-    // Admin-only features
-    if (session.role === 'admin') {
-        document.getElementById('btn-manage-users').style.display = 'inline-flex';
+    // Show restricted tabs if user has access
+    const hasRestrictedAccess = RESTRICTED_EMAILS.includes((session.email || '').toLowerCase());
+    if (hasRestrictedAccess) {
+        document.querySelectorAll('.restricted-tab').forEach(tab => {
+            tab.style.display = 'inline-flex';
+        });
     }
 
-    // Toggle user management
-    document.getElementById('btn-manage-users').addEventListener('click', () => {
-        const section = document.getElementById('users-section');
-        section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        if (section.style.display === 'block') renderUsers();
+    // ===== Tab Navigation =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.dataset.tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            const content = document.getElementById('tab-' + tabId);
+            if (content) content.classList.add('active');
+        });
     });
 
-    // Render submissions
+    // ===== Sub-tab Navigation =====
+    document.querySelectorAll('.sub-tabs').forEach(container => {
+        container.querySelectorAll('.sub-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const subtabId = btn.dataset.subtab;
+                container.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+                container.parentElement.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                const content = document.getElementById('subtab-' + subtabId);
+                if (content) content.classList.add('active');
+            });
+        });
+    });
+
+    // ===== Onboarding Tab: Submissions =====
     function renderSubmissions(filter = '') {
         const submissions = Submissions.getAll();
         const tbody = document.getElementById('submissions-body');
@@ -176,67 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detail-modal').addEventListener('click', (e) => {
         if (e.target === e.currentTarget) {
             e.currentTarget.style.display = 'none';
-        }
-    });
-
-    // User management
-    function renderUsers() {
-        const users = Auth.getAllUsers();
-        const tbody = document.getElementById('users-body');
-        tbody.innerHTML = users.map(u => `
-            <tr>
-                <td>${escapeHtml(u.name)}</td>
-                <td>${escapeHtml(u.email)}</td>
-                <td><span class="badge badge-${u.role}">${u.role}</span></td>
-                <td class="actions-cell">
-                    ${u.email !== session.email ? `
-                        <button class="btn-icon btn-icon-danger" title="Supprimer" data-action="remove-user" data-email="${escapeHtml(u.email)}">
-                            <span class="material-icons">delete</span>
-                        </button>
-                    ` : '<span class="text-muted">Vous</span>'}
-                </td>
-            </tr>
-        `).join('');
-
-        tbody.querySelectorAll('[data-action="remove-user"]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (confirm('Supprimer cet utilisateur ?')) {
-                    Auth.removeUser(btn.dataset.email);
-                    renderUsers();
-                }
-            });
-        });
-    }
-
-    // Add user
-    document.getElementById('btn-add-user').addEventListener('click', () => {
-        const name = document.getElementById('new-user-name').value.trim();
-        const email = document.getElementById('new-user-email').value.trim();
-        const password = document.getElementById('new-user-password').value;
-        const role = document.getElementById('new-user-role').value;
-        const errorEl = document.getElementById('add-user-error');
-
-        if (!name || !email || !password) {
-            errorEl.textContent = 'Tous les champs sont requis';
-            errorEl.style.display = 'block';
-            return;
-        }
-        if (password.length < 6) {
-            errorEl.textContent = 'Le mot de passe doit faire au moins 6 caractères';
-            errorEl.style.display = 'block';
-            return;
-        }
-
-        const result = Auth.addUser(email, password, name, role);
-        if (result.success) {
-            errorEl.style.display = 'none';
-            document.getElementById('new-user-name').value = '';
-            document.getElementById('new-user-email').value = '';
-            document.getElementById('new-user-password').value = '';
-            renderUsers();
-        } else {
-            errorEl.textContent = result.error;
-            errorEl.style.display = 'block';
         }
     });
 

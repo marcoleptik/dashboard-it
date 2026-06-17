@@ -1262,3 +1262,111 @@ textarea::placeholder {
     font-size: 2rem;
     color: rgba(255, 255, 255, 0.8);
 }
+
+/* ===== Admin Tabs ===== */
+.admin-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover {
+    color: #334155;
+    background: #f1f5f9;
+}
+
+.tab-btn.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+}
+
+.tab-btn .material-icons {
+    font-size: 1.1rem;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===== Sub-tabs ===== */
+.sub-tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.sub-tab-btn {
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #94a3b8;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.sub-tab-btn:hover {
+    color: #475569;
+}
+
+.sub-tab-btn.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+}
+
+.sub-tab-content {
+    display: none;
+}
+
+.sub-tab-content.active {
+    display: block;
+}
+
+/* ===== Licence / Stock grid ===== */
+.licence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #94a3b8;
+}
+
+.empty-state .material-icons {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.restricted-tab {
+    display: none;
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Onboarding RS</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=12">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -14,106 +14,280 @@
         <header class="admin-header">
             <div class="admin-header-left">
                 <img src="assets/rs_logo.jpg" alt="Recommerce" class="admin-logo">
-                <h1>Onboarding - Dashboard</h1>
+                <h1>Dashboard Admin</h1>
             </div>
             <div class="admin-header-right">
                 <span class="admin-user" id="admin-user-name"></span>
-                <button class="btn btn-secondary btn-sm" id="btn-manage-users" style="display:none;">
-                    <span class="material-icons">group</span> Utilisateurs
-                </button>
                 <button class="btn btn-secondary btn-sm" id="btn-logout">
                     <span class="material-icons">logout</span> Déconnexion
                 </button>
             </div>
         </header>
 
+        <!-- Tabs navigation -->
+        <nav class="admin-tabs" id="admin-tabs">
+            <button class="tab-btn active" data-tab="onboarding">
+                <span class="material-icons">description</span> Onboarding
+            </button>
+            <button class="tab-btn restricted-tab" data-tab="licences" style="display:none;">
+                <span class="material-icons">vpn_key</span> Licences
+            </button>
+            <button class="tab-btn restricted-tab" data-tab="stock-pc" style="display:none;">
+                <span class="material-icons">computer</span> Stock PC
+            </button>
+            <button class="tab-btn restricted-tab" data-tab="fiscalite" style="display:none;">
+                <span class="material-icons">account_balance</span> Fiscalité
+            </button>
+        </nav>
+
         <!-- Main content -->
         <main class="admin-main">
-            <!-- Stats -->
-            <div class="admin-stats" id="admin-stats">
-                <div class="stat-card">
-                    <span class="material-icons">description</span>
-                    <div class="stat-info">
-                        <span class="stat-value" id="stat-total">0</span>
-                        <span class="stat-label">Soumissions totales</span>
+
+            <!-- TAB: Onboarding -->
+            <div class="tab-content active" id="tab-onboarding">
+                <div class="admin-stats" id="admin-stats">
+                    <div class="stat-card">
+                        <span class="material-icons">description</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-total">0</span>
+                            <span class="stat-label">Soumissions totales</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="material-icons">today</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-today">0</span>
+                            <span class="stat-label">Aujourd'hui</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="material-icons">calendar_month</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-month">0</span>
+                            <span class="stat-label">Ce mois</span>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <span class="material-icons">today</span>
-                    <div class="stat-info">
-                        <span class="stat-value" id="stat-today">0</span>
-                        <span class="stat-label">Aujourd'hui</span>
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2>Formulaires soumis</h2>
+                        <input type="text" id="search-submissions" class="search-input" placeholder="Rechercher par nom, email...">
                     </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-icons">calendar_month</span>
-                    <div class="stat-info">
-                        <span class="stat-value" id="stat-month">0</span>
-                        <span class="stat-label">Ce mois</span>
+                    <div class="table-container">
+                        <table class="submissions-table" id="submissions-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Contrat</th>
+                                    <th>Poste</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submissions-body">
+                            </tbody>
+                        </table>
+                        <div id="no-submissions" class="empty-state" style="display:none;">
+                            <span class="material-icons">inbox</span>
+                            <p>Aucune soumission pour le moment</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Submissions table -->
-            <div class="admin-section">
-                <div class="section-header">
-                    <h2>Formulaires soumis</h2>
-                    <input type="text" id="search-submissions" class="search-input" placeholder="Rechercher par nom, email...">
+            <!-- TAB: Licences -->
+            <div class="tab-content" id="tab-licences">
+                <div class="sub-tabs">
+                    <button class="sub-tab-btn active" data-subtab="licence-windows">Microsoft Windows</button>
+                    <button class="sub-tab-btn" data-subtab="licence-office">Microsoft Office</button>
                 </div>
-                <div class="table-container">
-                    <table class="submissions-table" id="submissions-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Prénom</th>
-                                <th>Nom</th>
-                                <th>Email</th>
-                                <th>Contrat</th>
-                                <th>Poste</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="submissions-body">
-                        </tbody>
-                    </table>
-                    <div id="no-submissions" class="empty-state" style="display:none;">
-                        <span class="material-icons">inbox</span>
-                        <p>Aucune soumission pour le moment</p>
+                <div class="sub-tab-content active" id="subtab-licence-windows">
+                    <div class="admin-section">
+                        <div class="section-header">
+                            <h2>Licences Microsoft Windows</h2>
+                        </div>
+                        <div class="licence-grid">
+                            <div class="stat-card">
+                                <span class="material-icons">window</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-win-total">0</span>
+                                    <span class="stat-label">Total</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="material-icons">check_circle</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-win-used">0</span>
+                                    <span class="stat-label">Utilisées</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="material-icons">add_circle</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-win-available">0</span>
+                                    <span class="stat-label">Disponibles</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Clé de licence</th>
+                                        <th>Version</th>
+                                        <th>Assignée à</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="licence-win-body">
+                                </tbody>
+                            </table>
+                            <div class="empty-state" id="no-licence-win" style="display:none;">
+                                <span class="material-icons">vpn_key</span>
+                                <p>Aucune licence Windows enregistrée</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="subtab-licence-office">
+                    <div class="admin-section">
+                        <div class="section-header">
+                            <h2>Licences Microsoft Office</h2>
+                        </div>
+                        <div class="licence-grid">
+                            <div class="stat-card">
+                                <span class="material-icons">edit_document</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-office-total">0</span>
+                                    <span class="stat-label">Total</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="material-icons">check_circle</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-office-used">0</span>
+                                    <span class="stat-label">Utilisées</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="material-icons">add_circle</span>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="licence-office-available">0</span>
+                                    <span class="stat-label">Disponibles</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Clé de licence</th>
+                                        <th>Version</th>
+                                        <th>Assignée à</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="licence-office-body">
+                                </tbody>
+                            </table>
+                            <div class="empty-state" id="no-licence-office" style="display:none;">
+                                <span class="material-icons">vpn_key</span>
+                                <p>Aucune licence Office enregistrée</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- User management (admin only) -->
-            <div class="admin-section" id="users-section" style="display:none;">
-                <div class="section-header">
-                    <h2>Gestion des utilisateurs</h2>
+            <!-- TAB: Stock PC -->
+            <div class="tab-content" id="tab-stock-pc">
+                <div class="sub-tabs">
+                    <button class="sub-tab-btn active" data-subtab="stock-gentilly">Gentilly</button>
+                    <button class="sub-tab-btn" data-subtab="stock-nantes">Nantes</button>
+                    <button class="sub-tab-btn" data-subtab="stock-bucarest">Bucarest</button>
+                    <button class="sub-tab-btn" data-subtab="stock-fribourg">Fribourg</button>
                 </div>
-                <div class="add-user-form">
-                    <input type="text" id="new-user-name" placeholder="Nom complet">
-                    <input type="email" id="new-user-email" placeholder="Email">
-                    <input type="password" id="new-user-password" placeholder="Mot de passe" autocomplete="new-password">
-                    <select id="new-user-role">
-                        <option value="member">Membre</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                    <button class="btn btn-primary btn-sm" id="btn-add-user">
-                        <span class="material-icons">person_add</span> Ajouter
-                    </button>
+                <div class="sub-tab-content active" id="subtab-stock-gentilly">
+                    <div class="admin-section">
+                        <div class="section-header"><h2>Stock PC - Gentilly</h2></div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr><th>ID</th><th>Modèle</th><th>Marque</th><th>OS</th><th>Statut</th><th>Assigné à</th></tr>
+                                </thead>
+                                <tbody id="stock-gentilly-body"></tbody>
+                            </table>
+                            <div class="empty-state" id="no-stock-gentilly" style="display:none;">
+                                <span class="material-icons">computer</span><p>Aucun PC enregistré</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="add-user-error" class="login-error" style="display:none;"></div>
-                <table class="submissions-table" id="users-table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>Rôle</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="users-body">
-                    </tbody>
-                </table>
+                <div class="sub-tab-content" id="subtab-stock-nantes">
+                    <div class="admin-section">
+                        <div class="section-header"><h2>Stock PC - Nantes</h2></div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr><th>ID</th><th>Modèle</th><th>Marque</th><th>OS</th><th>Statut</th><th>Assigné à</th></tr>
+                                </thead>
+                                <tbody id="stock-nantes-body"></tbody>
+                            </table>
+                            <div class="empty-state" id="no-stock-nantes" style="display:none;">
+                                <span class="material-icons">computer</span><p>Aucun PC enregistré</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="subtab-stock-bucarest">
+                    <div class="admin-section">
+                        <div class="section-header"><h2>Stock PC - Bucarest</h2></div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr><th>ID</th><th>Modèle</th><th>Marque</th><th>OS</th><th>Statut</th><th>Assigné à</th></tr>
+                                </thead>
+                                <tbody id="stock-bucarest-body"></tbody>
+                            </table>
+                            <div class="empty-state" id="no-stock-bucarest" style="display:none;">
+                                <span class="material-icons">computer</span><p>Aucun PC enregistré</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-tab-content" id="subtab-stock-fribourg">
+                    <div class="admin-section">
+                        <div class="section-header"><h2>Stock PC - Fribourg</h2></div>
+                        <div class="table-container">
+                            <table class="submissions-table">
+                                <thead>
+                                    <tr><th>ID</th><th>Modèle</th><th>Marque</th><th>OS</th><th>Statut</th><th>Assigné à</th></tr>
+                                </thead>
+                                <tbody id="stock-fribourg-body"></tbody>
+                            </table>
+                            <div class="empty-state" id="no-stock-fribourg" style="display:none;">
+                                <span class="material-icons">computer</span><p>Aucun PC enregistré</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- TAB: Fiscalité -->
+            <div class="tab-content" id="tab-fiscalite">
+                <div class="admin-section">
+                    <div class="section-header"><h2>Fiscalité</h2></div>
+                    <div class="empty-state">
+                        <span class="material-icons">account_balance</span>
+                        <p>Section en construction</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
         <!-- Detail modal -->
@@ -131,7 +305,7 @@
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="js/auth.js?v=11"></script>
+    <script src="js/admin.js?v=11"></script>
 </body>
 </html>

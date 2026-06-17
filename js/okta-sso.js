@@ -14,6 +14,8 @@ const OKTA_CONFIG = {
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
 const ADMIN_EMAILS = [
     'marc.huteau@recommerce.com',
+    'gael.donat@recommerce.com',
+    'ange.bayoro@recommerce.com',
 ];
 const OKTA_SESSION_KEY = 'onboarding_okta_session';
 
