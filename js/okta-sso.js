@@ -116,9 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-        window.location.href = authUrl;
-    }
-
     function handleToken(idToken, state) {
         const errorEl = document.getElementById('sso-error');
 
