@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const redirectUri = window.location.origin + window.location.pathname;
 
             // Essayer d'abord avec le custom domain, fallback sur okta-emea
-            const authUrl = `https://recommerce.okta-emea.com/oauth2/default/v1/authorize?` +
+            const authUrl = `https://login.recommerce.com/oauth2/v1/authorize?` +
                 `client_id=${encodeURIComponent(OKTA_CONFIG.clientId)}` +
                 `&response_type=id_token` +
                 `&scope=${encodeURIComponent(OKTA_CONFIG.scopes.join(' '))}` +
