@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const steps = document.querySelectorAll('.form-step');
-    const stepItems = document.querySelectorAll('.step-item');
+    const appContainer = document.getElementById('app-container');
+    const steps = appContainer.querySelectorAll('.form-step');
+    const stepItems = appContainer.querySelectorAll('.step-item');
     const btnPrev = document.getElementById('btn-prev');
     const btnNext = document.getElementById('btn-next');
     const btnSubmit = document.getElementById('btn-submit');
@@ -395,13 +396,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Submit
-    btnSubmit.addEventListener('click', () => {
+    btnSubmit.addEventListener('click', async () => {
         const formData = collectFormData();
         console.log('Form submitted:', formData);
         
         // Save submission
         if (typeof Submissions !== 'undefined') {
             Submissions.add(formData);
+        }
+
+        // Disable button during send
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span class="material-icons">hourglass_top</span> Envoi en cours...';
+
+        // Send email via backend
+        let emailSent = false;
+        try {
+            const response = await fetch('/api/send-onboarding', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            const result = await response.json();
+            emailSent = result.success;
+            if (!emailSent) {
+                console.error('Email error:', result.message);
+            }
+        } catch (err) {
+            console.error('Network error:', err);
         }
 
         // Show success
@@ -411,6 +433,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="material-icons">check_circle</span>
                 <h2>Demande envoyée avec succès !</h2>
                 <p>L'onboarding de <strong>${escapeHtml(formData.firstname)} ${escapeHtml(formData.lastname)}</strong> a bien été enregistré.</p>
+                ${emailSent
+                    ? '<p style="color: #2e7d32;"><span class="material-icons" style="vertical-align: middle; font-size: 18px;">email</span> Un email récapitulatif a été envoyé.</p>'
+                    : '<p style="color: #e65100;"><span class="material-icons" style="vertical-align: middle; font-size: 18px;">warning</span> L\'email n\'a pas pu être envoyé, mais la demande a été enregistrée.</p>'
+                }
                 <button class="btn btn-primary" style="margin-top: 2rem;" onclick="location.reload()">
                     Nouveau formulaire
                 </button>
