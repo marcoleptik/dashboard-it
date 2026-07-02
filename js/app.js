@@ -8,6 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
     const totalSteps = steps.length;
 
+    // Hide/show end-date based on contract type
+    const contractRadios = document.querySelectorAll('input[name="contract-type"]');
+    const endDateGroup = document.getElementById('end-date-group');
+    contractRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'CDI') {
+                endDateGroup.style.display = 'none';
+                document.getElementById('end-date').value = '';
+            } else {
+                endDateGroup.style.display = '';
+            }
+        });
+    });
+
     // Navigation
     function goToStep(step) {
         if (step < 1 || step > totalSteps) return;
@@ -245,20 +259,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Backoffice toggle
-    document.querySelectorAll('input[name="backoffice-needed"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-            const details = document.getElementById('backoffice-details');
-            details.style.display = radio.value === 'Oui' && radio.checked ? 'block' : 'none';
-        });
-    });
-
-    // Mailing list toggle
-    document.querySelectorAll('input[name="mailing-needed"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-            const details = document.getElementById('mailing-details');
-            details.style.display = radio.value === 'Oui' && radio.checked ? 'block' : 'none';
-        });
+    // Mailing list add button
+    document.getElementById('btn-add-mailing').addEventListener('click', () => {
+        const container = document.getElementById('mailing-list-container');
+        const entry = document.createElement('div');
+        entry.className = 'mailing-list-entry';
+        entry.innerHTML = '<input type="email" name="mailing-lists[]" placeholder="Ex: team-dev@recommerce.com"><button type="button" class="btn-remove-mailing" title="Supprimer"><span class="material-icons">close</span></button>';
+        entry.querySelector('.btn-remove-mailing').addEventListener('click', () => entry.remove());
+        container.appendChild(entry);
     });
 
     // Generate Summary
@@ -347,21 +355,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         container.appendChild(appsSection);
 
-        // Backoffice & Mailing
-        const backofficeNeeded = document.querySelector('input[name="backoffice-needed"]:checked');
-        const mailingNeeded = document.querySelector('input[name="mailing-needed"]:checked');
-        const boRows = [
-            { label: 'Accès Backoffice', value: backofficeNeeded ? backofficeNeeded.value : 'Non précisé' },
+        // Mailing Lists
+        const mailingInputs = document.querySelectorAll('input[name="mailing-lists[]"]');
+        const mailingValues = Array.from(mailingInputs).map(i => i.value.trim()).filter(v => v);
+        const mlRows = [
+            { label: 'Mailing list(s)', value: mailingValues.length > 0 ? mailingValues.join(', ') : 'Aucune' },
         ];
-        if (backofficeNeeded && backofficeNeeded.value === 'Oui') {
-            boRows.push({ label: 'Profil référent', value: document.getElementById('backoffice-profile').value || '-' });
-        }
-        boRows.push({ label: 'Mailing list', value: mailingNeeded ? mailingNeeded.value : 'Non précisé' });
-        if (mailingNeeded && mailingNeeded.value === 'Oui') {
-            boRows.push({ label: 'Adresses', value: document.getElementById('mailing-lists').value || '-' });
-        }
-        const boSection = createSummarySection('Backoffice & Mailing', boRows);
-        container.appendChild(boSection);
+        const mlSection = createSummarySection('Mailing List', mlRows);
+        container.appendChild(mlSection);
     }
 
     function createSummarySection(title, rows) {
@@ -483,10 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
             appsDsi: getCheckedValues('apps-dsi'),
             appsTransverses: getCheckedValues('apps-transverses'),
             tableauEmail: document.getElementById('tableau-email')?.value || '',
-            backofficeNeeded: document.querySelector('input[name="backoffice-needed"]:checked')?.value || '',
-            backofficeProfile: document.getElementById('backoffice-profile')?.value || '',
-            mailingNeeded: document.querySelector('input[name="mailing-needed"]:checked')?.value || '',
-            mailingLists: document.getElementById('mailing-lists')?.value || '',
+            mailingLists: Array.from(document.querySelectorAll('input[name="mailing-lists[]"]')).map(i => i.value.trim()).filter(v => v),
         };
     }
 });

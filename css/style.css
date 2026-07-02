@@ -1517,3 +1517,50 @@ textarea::placeholder {
     display: flex;
     min-height: 100vh;
 }
+
+/* ===== Mailing List Entries ===== */
+#mailing-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.mailing-list-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mailing-list-entry input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-remove-mailing {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove-mailing:hover {
+    background: #fee2e2;
+}
+
+.btn-add-mailing {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
