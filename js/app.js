@@ -408,6 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Disable button during send
         btnSubmit.disabled = true;
+        btnSubmit.classList.add('is-loading');
         btnSubmit.innerHTML = '<span class="material-icons">hourglass_top</span> Envoi en cours...';
 
         // Send email via backend

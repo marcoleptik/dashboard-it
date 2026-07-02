@@ -20,7 +20,11 @@
     --radius-sm: 10px;
     --radius-md: 14px;
     --radius-lg: 18px;
-    --transition: all 0.2s ease;
+    --transition: all 0.2s ease-out;
+    --transition-fast: all 0.1s ease-out;
+    --transition-medium: all 0.2s ease-out;
+    --transition-slow: all 0.3s ease-out;
+    --focus-ring: 0 0 0 3px rgba(45, 116, 116, 0.3);
     --pastel-teal: #e8f4f4;
     --pastel-mint: #eef7f7;
     --pastel-blue: #f0f7ff;
@@ -257,7 +261,7 @@ textarea {
     font-family: inherit;
     color: var(--text-primary);
     background: var(--bg-card);
-    transition: var(--transition);
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.1s ease-out;
     outline: none;
 }
 
@@ -267,12 +271,14 @@ input[type="date"]:focus,
 select:focus,
 textarea:focus {
     border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(45, 116, 116, 0.1);
+    box-shadow: var(--focus-ring);
+    transform: scale(1.01);
 }
 
 select:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none !important;
 }
 
 input::placeholder,
@@ -314,13 +320,27 @@ textarea::placeholder {
     font-weight: 500;
     color: var(--text-secondary);
     background: var(--bg-card);
-    transition: var(--transition);
+    transition: border-color 0.2s ease-out, background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out, box-shadow 0.2s ease-out;
 }
 
 .radio-card-content:hover,
 .checkbox-card-content:hover {
     border-color: var(--accent);
     background: var(--pastel-mint);
+    transform: scale(1.03);
+    box-shadow: 0 2px 8px rgba(45, 116, 116, 0.1);
+}
+
+.radio-card-content:active,
+.checkbox-card-content:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+}
+
+.radio-card input:focus-visible + .radio-card-content,
+.checkbox-card input:focus-visible + .checkbox-card-content {
+    box-shadow: var(--focus-ring);
+    border-color: var(--primary);
 }
 
 .radio-card input:checked + .radio-card-content,
@@ -328,6 +348,7 @@ textarea::placeholder {
     border-color: var(--accent);
     background: var(--pastel-teal);
     color: var(--primary);
+    box-shadow: 0 2px 8px rgba(229, 146, 46, 0.15);
 }
 
 /* Large cards */
@@ -481,8 +502,18 @@ textarea::placeholder {
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition);
+    transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
     font-family: inherit;
+}
+
+.btn:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
 }
 
 .btn .material-icons {
@@ -498,6 +529,7 @@ textarea::placeholder {
 .btn-primary:hover {
     background: var(--primary-light);
     box-shadow: 0 4px 14px rgba(45, 116, 116, 0.35);
+    transform: scale(1.03);
 }
 
 .btn-secondary {
@@ -509,11 +541,19 @@ textarea::placeholder {
 .btn-secondary:hover {
     border-color: var(--text-secondary);
     color: var(--text-primary);
+    transform: scale(1.03);
 }
 
 .btn-secondary:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-secondary:disabled:hover {
+    transform: none !important;
+    border-color: var(--border);
+    color: var(--text-secondary);
 }
 
 .btn-success {
@@ -525,6 +565,7 @@ textarea::placeholder {
 .btn-success:hover {
     background: var(--accent-dark);
     box-shadow: var(--shadow-md);
+    transform: scale(1.03);
 }
 
 /* Summary */
@@ -1563,4 +1604,208 @@ textarea::placeholder {
     gap: 0.3rem;
     font-size: 0.85rem;
     cursor: pointer;
+    transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out, border-color 0.2s ease-out;
+}
+
+.btn-add-mailing:hover {
+    transform: scale(1.03);
+}
+
+.btn-add-mailing:active {
+    transform: scale(0.97);
+}
+
+/* ===== Micro-interactions: Step nav items ===== */
+.step-item {
+    transition: background 0.2s ease-out, transform 0.15s ease-out;
+}
+
+.step-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.step-item:active {
+    transform: translateX(2px) scale(0.98);
+    transition-duration: 0.1s;
+}
+
+/* ===== Loading state for submit button ===== */
+.btn.is-loading {
+    pointer-events: none;
+    opacity: 0.7;
+    position: relative;
+}
+
+.btn.is-loading::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Mailing list entry appearance ===== */
+.mailing-list-entry {
+    animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Remove button interaction ===== */
+.btn-remove-mailing {
+    transition: background 0.15s ease-out, transform 0.15s ease-out, color 0.15s ease-out;
+}
+
+.btn-remove-mailing:hover {
+    background: #fee2e2;
+    transform: scale(1.15);
+}
+
+.btn-remove-mailing:active {
+    transform: scale(0.9);
+}
+
+/* ===== App category cards ===== */
+.app-category {
+    transition: box-shadow 0.25s ease-out, transform 0.2s ease-out;
+}
+
+.app-category:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ===== Summary section cards ===== */
+.summary-section {
+    transition: box-shadow 0.25s ease-out, transform 0.2s ease-out;
+}
+
+.summary-section:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* ===== Summary tags ===== */
+.summary-tag {
+    transition: background 0.2s ease-out, transform 0.15s ease-out;
+}
+
+.summary-tag:hover {
+    background: #d4edee;
+    transform: scale(1.05);
+}
+
+/* ===== SSO Card & Home Card entrance ===== */
+.sso-card,
+.home-card {
+    animation: cardAppear 0.4s ease-out;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ===== Home action buttons ===== */
+.btn-home {
+    transition: background 0.2s ease-out, transform 0.15s ease-out, box-shadow 0.2s ease-out, color 0.2s ease-out;
+}
+
+.btn-home:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-home:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+}
+
+/* ===== Sidebar links ===== */
+.sidebar-link {
+    transition: color 0.2s ease-out, transform 0.15s ease-out;
+}
+
+.sidebar-link:hover {
+    transform: translateX(3px);
+}
+
+/* ===== Dropdown/select appearance ===== */
+select {
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.1s ease-out;
+}
+
+/* ===== Conditional fields appearance ===== */
+.conditional-field {
+    animation: fadeSlideDown 0.3s ease-out;
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Prefers Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .btn:hover,
+    .btn:active,
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .btn-success:hover,
+    .btn-home:hover,
+    .btn-home:active,
+    .radio-card-content:hover,
+    .checkbox-card-content:hover,
+    .radio-card-content:active,
+    .checkbox-card-content:active,
+    .step-item:hover,
+    .step-item:active,
+    .app-category:hover,
+    .summary-section:hover,
+    .summary-tag:hover,
+    .btn-add-mailing:hover,
+    .btn-add-mailing:active,
+    .btn-remove-mailing:hover,
+    .btn-remove-mailing:active,
+    .sidebar-link:hover {
+        transform: none !important;
+    }
 }
