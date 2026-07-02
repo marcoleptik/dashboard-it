@@ -1809,3 +1809,57 @@ select {
         transform: none !important;
     }
 }
+
+/* ===== Language Switcher ===== */
+.lang-switcher {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.25rem;
+    box-shadow: var(--shadow-sm);
+    z-index: 1000;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.7rem;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--text-secondary);
+    transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out;
+}
+
+.lang-btn:hover {
+    background: var(--pastel-mint);
+    transform: scale(1.05);
+}
+
+.lang-btn:active {
+    transform: scale(0.95);
+}
+
+.lang-btn.active {
+    background: var(--primary);
+    color: var(--text-white);
+}
+
+.lang-btn.active:hover {
+    background: var(--primary-light);
+}
+
+.lang-btn svg {
+    border-radius: 2px;
+    flex-shrink: 0;
+}

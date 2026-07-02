@@ -13,13 +13,13 @@
     <div class="sso-gate" id="sso-gate">
         <div class="sso-card">
             <img src="assets/rs_logo.jpg" alt="Recommerce" class="login-logo">
-            <h1>Onboarding RS</h1>
-            <p>Connectez-vous avec votre compte Recommerce pour accéder au formulaire</p>
+            <h1 data-i18n="sso.title">Onboarding RS</h1>
+            <p data-i18n="sso.subtitle">Connectez-vous avec votre compte Recommerce pour accéder au formulaire</p>
             <button class="btn btn-primary btn-full btn-okta" id="okta-login-btn">
-                <span class="material-icons">login</span> Se connecter via Okta
+                <span class="material-icons">login</span> <span data-i18n="sso.login">Se connecter via Okta</span>
             </button>
             <div id="sso-error" class="login-error" style="display:none;"></div>
-            <p class="sso-hint">Seules les adresses <strong>@recommerce.com</strong> et <strong>@circularx.com</strong> sont autorisées</p>
+            <p class="sso-hint" data-i18n="sso.hint">Seules les adresses <strong>@recommerce.com</strong> et <strong>@circularx.com</strong> sont autorisées</p>
         </div>
     </div>
 
@@ -27,25 +27,25 @@
     <div class="home-screen" id="home-screen" style="display:none;">
         <div class="home-card">
             <img src="assets/rs_logo.jpg" alt="Recommerce" class="login-logo">
-            <h1>Bienvenue sur le Dashboard IT</h1>
-            <p class="home-subtitle">Que souhaitez-vous faire ?</p>
+            <h1 data-i18n="home.title">Bienvenue sur le Dashboard IT</h1>
+            <p class="home-subtitle" data-i18n="home.subtitle">Que souhaitez-vous faire ?</p>
             <div class="home-actions">
                 <button class="btn btn-primary btn-home" id="btn-go-onboarding">
                     <span class="material-icons">description</span>
-                    Formulaire d'onboarding
+                    <span data-i18n="home.onboarding">Formulaire d'onboarding</span>
                 </button>
                 <button class="btn btn-primary btn-home" id="btn-go-material">
                     <span class="material-icons">devices</span>
-                    Demande de matériel
+                    <span data-i18n="home.material">Demande de matériel</span>
                 </button>
                 <a href="admin.html" class="btn btn-primary btn-home" id="btn-go-admin" style="display:none;">
                     <span class="material-icons">dashboard</span>
-                    Dashboard Admin
+                    <span data-i18n="home.admin">Dashboard Admin</span>
                 </a>
             </div>
             <div class="home-user-info" id="home-user-info"></div>
             <button class="btn btn-outline btn-home-logout" id="home-logout">
-                <span class="material-icons">logout</span> Déconnexion
+                <span class="material-icons">logout</span> <span data-i18n="home.logout">Déconnexion</span>
             </button>
         </div>
     </div>
@@ -61,27 +61,27 @@
                 <ul id="step-list">
                     <li class="step-item active" data-step="1">
                         <span class="step-number">1</span>
-                        <span class="step-label">Informations personnelles</span>
+                        <span class="step-label" data-i18n="step.1">Informations personnelles</span>
                     </li>
                     <li class="step-item" data-step="2">
                         <span class="step-number">2</span>
-                        <span class="step-label">Contrat & Poste</span>
+                        <span class="step-label" data-i18n="step.2">Contrat & Poste</span>
                     </li>
                     <li class="step-item" data-step="3">
                         <span class="step-number">3</span>
-                        <span class="step-label">Matériel</span>
+                        <span class="step-label" data-i18n="step.3">Matériel</span>
                     </li>
                     <li class="step-item" data-step="4">
                         <span class="step-number">4</span>
-                        <span class="step-label">Applications</span>
+                        <span class="step-label" data-i18n="step.4">Applications</span>
                     </li>
                     <li class="step-item" data-step="5">
                         <span class="step-number">5</span>
-                        <span class="step-label">Mailing List</span>
+                        <span class="step-label" data-i18n="step.5">Mailing List</span>
                     </li>
                     <li class="step-item" data-step="6">
                         <span class="step-number">6</span>
-                        <span class="step-label">Récapitulatif</span>
+                        <span class="step-label" data-i18n="step.6">Récapitulatif</span>
                     </li>
                 </ul>
             </nav>
@@ -89,7 +89,7 @@
                 <div class="sidebar-user-email" id="sidebar-user-email"></div>
                 <a href="#" class="sidebar-link btn-back-home">
                     <span class="material-icons">home</span>
-                    <span>Retour à l'accueil</span>
+                    <span data-i18n="sidebar.back">Retour à l'accueil</span>
                 </a>
             </div>
         </aside>
@@ -100,25 +100,25 @@
                 <!-- Step 1: Personal Info -->
                 <section class="form-step active" data-step="1">
                     <div class="step-header">
-                        <h1>Informations personnelles</h1>
-                        <p>Renseignez les informations de base du futur collaborateur</p>
+                        <h1 data-i18n="step1.title">Informations personnelles</h1>
+                        <p data-i18n="step1.subtitle">Renseignez les informations de base du futur collaborateur</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="firstname">Prénom / First name <span class="required">*</span></label>
-                            <input type="text" id="firstname" name="firstname" required placeholder="Prénom">
+                            <label for="firstname"><span data-i18n="step1.firstname">Prénom</span> <span class="required">*</span></label>
+                            <input type="text" id="firstname" name="firstname" required placeholder="Prénom" data-i18n-placeholder="step1.firstname.placeholder">
                         </div>
                         <div class="form-group">
-                            <label for="lastname">Nom / Surname <span class="required">*</span></label>
-                            <input type="text" id="lastname" name="lastname" required placeholder="Nom">
+                            <label for="lastname"><span data-i18n="step1.lastname">Nom</span> <span class="required">*</span></label>
+                            <input type="text" id="lastname" name="lastname" required placeholder="Nom" data-i18n-placeholder="step1.lastname.placeholder">
                         </div>
                         <div class="form-group">
-                            <label for="personal-email">Mail personnel / Personal email <span class="required">*</span></label>
-                            <input type="email" id="personal-email" name="personal-email" required placeholder="email@exemple.com">
+                            <label for="personal-email"><span data-i18n="step1.personal_email">Mail personnel</span> <span class="required">*</span></label>
+                            <input type="email" id="personal-email" name="personal-email" required placeholder="email@exemple.com" data-i18n-placeholder="step1.personal_email.placeholder">
                         </div>
                         <div class="form-group">
-                            <label for="pro-email">Mail professionnel / Professional email</label>
-                            <input type="email" id="pro-email" name="pro-email" placeholder="prenom.nom@recommerce.com">
+                            <label for="pro-email" data-i18n="step1.pro_email">Mail professionnel</label>
+                            <input type="email" id="pro-email" name="pro-email" placeholder="prenom.nom@recommerce.com" data-i18n-placeholder="step1.pro_email.placeholder">
                         </div>
 
                     </div>
@@ -127,12 +127,12 @@
                 <!-- Step 2: Contract & Job -->
                 <section class="form-step" data-step="2">
                     <div class="step-header">
-                        <h1>Contrat & Poste</h1>
-                        <p>Informations relatives au contrat et au poste</p>
+                        <h1 data-i18n="step2.title">Contrat & Poste</h1>
+                        <p data-i18n="step2.subtitle">Informations relatives au contrat et au poste</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Type de contrat / Type of contract <span class="required">*</span></label>
+                            <label><span data-i18n="step2.contract_type">Type de contrat</span> <span class="required">*</span></label>
                             <div class="radio-group">
                                 <label class="radio-card">
                                     <input type="radio" name="contract-type" value="CDI">
@@ -329,13 +329,13 @@
                 <!-- Step 3: Material -->
                 <section class="form-step" data-step="3">
                     <div class="step-header">
-                        <h1>Matériel</h1>
-                        <p>Quel matériel sera nécessaire pour le collaborateur ?</p>
+                        <h1 data-i18n="step3.title">Matériel</h1>
+                        <p data-i18n="step3.subtitle">Quel matériel sera nécessaire pour le collaborateur ?</p>
                     </div>
                     <div class="form-grid">
                         <!-- Laptop toggle -->
                         <div class="form-group full-width">
-                            <label>Laptop nécessaire ? <span class="required">*</span></label>
+                            <label><span data-i18n="step3.laptop">Laptop nécessaire ?</span> <span class="required">*</span></label>
                             <div class="radio-group">
                                 <label class="radio-card">
                                     <input type="radio" name="laptop-needed" value="Oui">
@@ -417,7 +417,7 @@
 
                         <!-- Desk equipment -->
                         <div class="form-group full-width">
-                            <label>Matériel sur le bureau <span class="info-badge">⚠️ Vérifier si le matériel est déjà installé sur le bureau</span></label>
+                            <label><span data-i18n="step3.desk_material">Matériel sur le bureau</span> <span class="info-badge" data-i18n="step3.desk_warning">⚠️ Vérifier si le matériel est déjà installé sur le bureau</span></label>
                             <div class="checkbox-group">
                                 <label class="checkbox-card">
                                     <input type="checkbox" name="desk-material" value="Souris">
@@ -455,13 +455,13 @@
                 <!-- Step 4: Applications -->
                 <section class="form-step" data-step="4">
                     <div class="step-header">
-                        <h1>Applications</h1>
-                        <p>Sélectionnez les applications nécessaires pour le collaborateur</p>
+                        <h1 data-i18n="step4.title">Applications</h1>
+                        <p data-i18n="step4.subtitle">Sélectionnez les applications nécessaires pour le collaborateur</p>
                     </div>
                     <div class="form-grid applications-grid">
                         <!-- Finance -->
                         <div class="app-category">
-                            <h3>Applications Finance</h3>
+                            <h3 data-i18n="step4.finance">Applications Finance</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-finance" value="Yooz"><span class="checkbox-card-content">Yooz</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-finance" value="Sage"><span class="checkbox-card-content">Sage</span></label>
@@ -472,7 +472,7 @@
                         </div>
                         <!-- Achats -->
                         <div class="app-category">
-                            <h3>Applications Achats</h3>
+                            <h3 data-i18n="step4.achats">Applications Achats</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-achats" value="B2B"><span class="checkbox-card-content">B2B</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-achats" value="Sourcing"><span class="checkbox-card-content">Sourcing</span></label>
@@ -480,7 +480,7 @@
                         </div>
                         <!-- Ventes -->
                         <div class="app-category">
-                            <h3>Applications Ventes</h3>
+                            <h3 data-i18n="step4.ventes">Applications Ventes</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-ventes" value="Akeneo"><span class="checkbox-card-content">Akeneo</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-ventes" value="Billing"><span class="checkbox-card-content">Billing</span></label>
@@ -490,7 +490,7 @@
                         </div>
                         <!-- Pricing -->
                         <div class="app-category">
-                            <h3>Applications Pricing</h3>
+                            <h3 data-i18n="step4.pricing">Applications Pricing</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-pricing" value="Resale Pricing"><span class="checkbox-card-content">Resale Pricing</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-pricing" value="Batch Pricing"><span class="checkbox-card-content">Batch Pricing</span></label>
@@ -499,7 +499,7 @@
                         </div>
                         <!-- DSI -->
                         <div class="app-category">
-                            <h3>Applications DSI</h3>
+                            <h3 data-i18n="step4.dsi">Applications DSI</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-dsi" value="Okta"><span class="checkbox-card-content"><svg class="app-logo" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 0C5.389 0 0 5.389 0 12s5.389 12 12 12 12-5.389 12-12S18.611 0 12 0zm0 18c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z"/></svg> Okta</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-dsi" value="VPN"><span class="checkbox-card-content"><span class="material-icons">vpn_lock</span> VPN</span></label>
@@ -522,7 +522,7 @@
                         </div>
                         <!-- Transverses -->
                         <div class="app-category">
-                            <h3>Applications Transverses</h3>
+                            <h3 data-i18n="step4.transverses">Applications Transverses</h3>
                             <div class="checkbox-group compact">
                                 <label class="checkbox-card"><input type="checkbox" name="apps-transverses" value="Backoffice"><span class="checkbox-card-content">Backoffice</span></label>
                                 <label class="checkbox-card"><input type="checkbox" name="apps-transverses" value="SOM"><span class="checkbox-card-content">SOM</span></label>
@@ -535,19 +535,19 @@
                 <!-- Step 5: Mailing List -->
                 <section class="form-step" data-step="5">
                     <div class="step-header">
-                        <h1>Mailing List</h1>
-                        <p>Listes de diffusion auxquelles ajouter le collaborateur</p>
+                        <h1 data-i18n="step5.title">Mailing List</h1>
+                        <p data-i18n="step5.subtitle">Listes de diffusion auxquelles ajouter le collaborateur</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group full-width">
-                            <label>Mailing list(s)</label>
+                            <label data-i18n="step5.label">Mailing list(s)</label>
                             <div id="mailing-list-container">
                                 <div class="mailing-list-entry">
                                     <input type="email" name="mailing-lists[]" placeholder="Ex: team-dev@recommerce.com">
                                 </div>
                             </div>
                             <button type="button" class="btn btn-outline btn-add-mailing" id="btn-add-mailing">
-                                <span class="material-icons">add</span> Ajouter une mailing list
+                                <span class="material-icons">add</span> <span data-i18n="step5.add">Ajouter une mailing list</span>
                             </button>
                         </div>
                     </div>
@@ -556,8 +556,8 @@
                 <!-- Step 6: Summary -->
                 <section class="form-step" data-step="6">
                     <div class="step-header">
-                        <h1>Récapitulatif</h1>
-                        <p>Vérifiez les informations avant de soumettre</p>
+                        <h1 data-i18n="step6.title">Récapitulatif</h1>
+                        <p data-i18n="step6.subtitle">Vérifiez les informations avant de soumettre</p>
                     </div>
                     <div id="summary-content" class="summary-content">
                         <!-- Filled by JS -->
@@ -567,13 +567,13 @@
                 <!-- Navigation -->
                 <div class="form-navigation">
                     <button type="button" class="btn btn-secondary" id="btn-prev" disabled>
-                        <span class="material-icons">arrow_back</span> Précédent
+                        <span class="material-icons">arrow_back</span> <span data-i18n="nav.prev">Précédent</span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-next">
-                        Suivant <span class="material-icons">arrow_forward</span>
+                        <span data-i18n="nav.next">Suivant</span> <span class="material-icons">arrow_forward</span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-submit" style="display:none;">
-                        <span class="material-icons">check_circle</span> Soumettre
+                        <span class="material-icons">check_circle</span> <span data-i18n="nav.submit">Soumettre</span>
                     </button>
                 </div>
             </div>
@@ -589,16 +589,16 @@
             </div>
             <nav class="step-nav">
                 <ul id="mat-step-list">
-                    <li class="step-item active" data-mat-step="1"><span class="step-number">1</span><span class="step-label">Lieu d'utilisation</span></li>
-                    <li class="step-item" data-mat-step="2"><span class="step-number">2</span><span class="step-label">Matériel</span></li>
-                    <li class="step-item" data-mat-step="3"><span class="step-number">3</span><span class="step-label">Commentaire</span></li>
+                    <li class="step-item active" data-mat-step="1"><span class="step-number">1</span><span class="step-label" data-i18n="mat.step1">Lieu d'utilisation</span></li>
+                    <li class="step-item" data-mat-step="2"><span class="step-number">2</span><span class="step-label" data-i18n="mat.step2">Matériel</span></li>
+                    <li class="step-item" data-mat-step="3"><span class="step-number">3</span><span class="step-label" data-i18n="mat.step3">Commentaire</span></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
                 <div class="sidebar-user-email" id="sidebar-user-email-material"></div>
                 <a href="#" class="sidebar-link btn-back-home">
                     <span class="material-icons">home</span>
-                    <span>Retour à l'accueil</span>
+                    <span data-i18n="sidebar.back">Retour à l'accueil</span>
                 </a>
             </div>
         </aside>
@@ -607,20 +607,20 @@
                 <!-- Mat Step 1: Lieu -->
                 <section class="form-step active" data-mat-step="1">
                     <div class="step-header">
-                        <h1>Lieu d'utilisation</h1>
-                        <p>Ce matériel sera utilisé au bureau ou en télétravail ?</p>
+                        <h1 data-i18n="mat.step1.title">Lieu d'utilisation</h1>
+                        <p data-i18n="mat.step1.subtitle">Ce matériel sera utilisé au bureau ou en télétravail ?</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group full-width">
-                            <label>Où utiliserez-vous ce matériel ? <span class="required">*</span></label>
+                            <label><span data-i18n="mat.step1.label">Où utiliserez-vous ce matériel ?</span> <span class="required">*</span></label>
                             <div class="radio-group large-cards">
                                 <label class="radio-card">
                                     <input type="radio" name="material-type" value="Bureau">
-                                    <span class="radio-card-content"><span class="material-icons">business</span><strong>Bureau</strong><small>Matériel pour les locaux</small></span>
+                                    <span class="radio-card-content"><span class="material-icons">business</span><strong data-i18n="mat.office">Bureau</strong><small data-i18n="mat.office.desc">Matériel pour les locaux</small></span>
                                 </label>
                                 <label class="radio-card">
                                     <input type="radio" name="material-type" value="Télétravail">
-                                    <span class="radio-card-content"><span class="material-icons">home_work</span><strong>Télétravail</strong><small>Matériel pour la maison</small></span>
+                                    <span class="radio-card-content"><span class="material-icons">home_work</span><strong data-i18n="mat.remote">Télétravail</strong><small data-i18n="mat.remote.desc">Matériel pour la maison</small></span>
                                 </label>
                             </div>
                         </div>
@@ -630,42 +630,42 @@
                 <!-- Mat Step 2: Raison + Matériel -->
                 <section class="form-step" data-mat-step="2">
                     <div class="step-header">
-                        <h1>Choix du matériel</h1>
-                        <p>Indiquez la raison de votre demande et sélectionnez le matériel souhaité</p>
+                        <h1 data-i18n="mat.step2.title">Choix du matériel</h1>
+                        <p data-i18n="mat.step2.subtitle">Indiquez la raison de votre demande et sélectionnez le matériel souhaité</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group full-width">
-                            <label>Raison de la demande <span class="required">*</span></label>
+                            <label><span data-i18n="mat.reason">Raison de la demande</span> <span class="required">*</span></label>
                             <div class="radio-group">
                                 <label class="radio-card">
                                     <input type="radio" name="material-reason" value="Perdu">
-                                    <span class="radio-card-content"><span class="material-icons">search_off</span> Perdu</span>
+                                    <span class="radio-card-content"><span class="material-icons">search_off</span> <span data-i18n="mat.reason.lost">Perdu</span></span>
                                 </label>
                                 <label class="radio-card">
                                     <input type="radio" name="material-reason" value="Volé">
-                                    <span class="radio-card-content"><span class="material-icons">report</span> Volé</span>
+                                    <span class="radio-card-content"><span class="material-icons">report</span> <span data-i18n="mat.reason.stolen">Volé</span></span>
                                 </label>
                                 <label class="radio-card">
                                     <input type="radio" name="material-reason" value="Ne fonctionne plus">
-                                    <span class="radio-card-content"><span class="material-icons">build_circle</span> Ne fonctionne plus</span>
+                                    <span class="radio-card-content"><span class="material-icons">build_circle</span> <span data-i18n="mat.reason.broken">Ne fonctionne plus</span></span>
                                 </label>
                                 <label class="radio-card">
                                     <input type="radio" name="material-reason" value="Jamais eu">
-                                    <span class="radio-card-content"><span class="material-icons">new_releases</span> Je n'en avais pas avant</span>
+                                    <span class="radio-card-content"><span class="material-icons">new_releases</span> <span data-i18n="mat.reason.never_had">Je n'en avais pas avant</span></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group full-width">
-                            <label>Matériel souhaité <span class="required">*</span></label>
+                            <label><span data-i18n="mat.items">Matériel souhaité</span> <span class="required">*</span></label>
                             <div class="checkbox-group">
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Écran"><span class="checkbox-card-content"><span class="material-icons">desktop_windows</span> Écran</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Clavier"><span class="checkbox-card-content"><span class="material-icons">keyboard</span> Clavier</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Souris"><span class="checkbox-card-content"><span class="material-icons">mouse</span> Souris</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Câble HDMI"><span class="checkbox-card-content"><span class="material-icons">cable</span> Câble HDMI</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Casque"><span class="checkbox-card-content"><span class="material-icons">headphones</span> Casque</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Support PC"><span class="checkbox-card-content"><span class="material-icons">laptop_mac</span> Support PC</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Hub USB"><span class="checkbox-card-content"><span class="material-icons">usb</span> Hub USB</span></label>
-                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Chargeur"><span class="checkbox-card-content"><span class="material-icons">power</span> Chargeur</span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Écran"><span class="checkbox-card-content"><span class="material-icons">desktop_windows</span> <span data-i18n="mat.screen">Écran</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Clavier"><span class="checkbox-card-content"><span class="material-icons">keyboard</span> <span data-i18n="mat.keyboard">Clavier</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Souris"><span class="checkbox-card-content"><span class="material-icons">mouse</span> <span data-i18n="mat.mouse">Souris</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Câble HDMI"><span class="checkbox-card-content"><span class="material-icons">cable</span> <span data-i18n="mat.hdmi">Câble HDMI</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Casque"><span class="checkbox-card-content"><span class="material-icons">headphones</span> <span data-i18n="mat.headset">Casque</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Support PC"><span class="checkbox-card-content"><span class="material-icons">laptop_mac</span> <span data-i18n="mat.stand">Support PC</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Hub USB"><span class="checkbox-card-content"><span class="material-icons">usb</span> <span data-i18n="mat.hub">Hub USB</span></span></label>
+                                <label class="checkbox-card"><input type="checkbox" name="material-items" value="Chargeur"><span class="checkbox-card-content"><span class="material-icons">power</span> <span data-i18n="mat.charger">Chargeur</span></span></label>
                             </div>
                         </div>
                     </div>
@@ -674,32 +674,33 @@
                 <!-- Mat Step 3: Commentaire -->
                 <section class="form-step" data-mat-step="3">
                     <div class="step-header">
-                        <h1>Commentaire</h1>
-                        <p>Un détail à ajouter ? Précisez ici votre besoin</p>
+                        <h1 data-i18n="mat.step3.title">Commentaire</h1>
+                        <p data-i18n="mat.step3.subtitle">Un détail à ajouter ? Précisez ici votre besoin</p>
                     </div>
                     <div class="form-grid">
                         <div class="form-group full-width">
-                            <label for="material-comment">Commentaire libre</label>
-                            <textarea id="material-comment" name="material-comment" rows="5" placeholder="Exemple : besoin d'un écran 27 pouces, casque avec micro pour visioconférences, etc."></textarea>
+                            <label for="material-comment" data-i18n="mat.comment">Commentaire libre</label>
+                            <textarea id="material-comment" name="material-comment" rows="5" placeholder="Exemple : besoin d'un écran 27 pouces, casque avec micro pour visioconférences, etc." data-i18n-placeholder="mat.comment.placeholder"></textarea>
                         </div>
                     </div>
                 </section>
 
                 <div class="form-navigation">
                     <button type="button" class="btn btn-secondary" id="btn-mat-prev" disabled>
-                        <span class="material-icons">arrow_back</span> Précédent
+                        <span class="material-icons">arrow_back</span> <span data-i18n="mat.prev">Précédent</span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-mat-next">
-                        Suivant <span class="material-icons">arrow_forward</span>
+                        <span data-i18n="mat.next">Suivant</span> <span class="material-icons">arrow_forward</span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-submit-material" style="display:none;">
-                        <span class="material-icons">check_circle</span> Soumettre la demande
+                        <span class="material-icons">check_circle</span> <span data-i18n="mat.submit">Soumettre la demande</span>
                     </button>
                 </div>
             </div>
         </main>
     </div>
 
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/auth.js?v=6"></script>
     <script src="js/okta-sso.js?v=14"></script>
     <script src="js/app.js?v=7"></script>
