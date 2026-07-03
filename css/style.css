@@ -1863,3 +1863,111 @@ select {
     border-radius: 2px;
     flex-shrink: 0;
 }
+
+/* ===== Licence Key Input ===== */
+.licence-key-input {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.licence-key-segment {
+    width: 80px;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    outline: none;
+}
+
+.licence-key-segment:focus {
+    border-color: var(--primary);
+    box-shadow: var(--focus-ring);
+}
+
+.licence-key-sep {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    font-weight: 300;
+}
+
+.btn-copy-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out, border-color 0.2s ease-out;
+    margin-left: 0.5rem;
+}
+
+.btn-copy-key:hover {
+    background: var(--pastel-teal);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: scale(1.05);
+}
+
+.btn-copy-key:active {
+    transform: scale(0.95);
+}
+
+.btn-copy-key.copied {
+    background: #e8f5e9;
+    border-color: #4caf50;
+    color: #4caf50;
+}
+
+/* Licence admin table key display */
+.licence-key-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: var(--pastel-mint);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.licence-key-display:hover {
+    background: var(--pastel-teal);
+}
+
+.licence-key-display .material-icons {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.licence-count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    background: var(--pastel-blue);
+    color: var(--primary);
+}
+
+.licence-count-badge.exhausted {
+    background: #ffebee;
+    color: #c62828;
+}

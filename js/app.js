@@ -637,4 +637,111 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // ===== Licence Form =====
+    const licenceContainer = document.getElementById('licence-container');
+    if (licenceContainer) {
+        // Show licence form from home
+        const btnGoLicence = document.getElementById('btn-go-licence');
+        if (btnGoLicence) {
+            btnGoLicence.addEventListener('click', () => {
+                document.getElementById('home-screen').style.display = 'none';
+                licenceContainer.style.display = 'flex';
+            });
+        }
+
+        // Auto-advance between key segments
+        const segments = licenceContainer.querySelectorAll('.licence-key-segment');
+        segments.forEach((seg, i) => {
+            seg.addEventListener('input', (e) => {
+                e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                if (e.target.value.length === 5 && i < segments.length - 1) {
+                    segments[i + 1].focus();
+                }
+            });
+            seg.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && i > 0) {
+                    segments[i - 1].focus();
+                }
+            });
+            // Handle paste of full key
+            seg.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pasted = (e.clipboardData.getData('text') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+                if (pasted.length >= 25) {
+                    for (let j = 0; j < 5; j++) {
+                        segments[j].value = pasted.substr(j * 5, 5);
+                    }
+                    segments[4].focus();
+                } else {
+                    e.target.value = pasted.substr(0, 5);
+                    if (pasted.length === 5 && i < segments.length - 1) {
+                        segments[i + 1].focus();
+                    }
+                }
+            });
+        });
+
+        // Copy key
+        document.getElementById('btn-copy-key').addEventListener('click', () => {
+            const fullKey = Array.from(segments).map(s => s.value).join('-');
+            if (fullKey.replace(/-/g, '').length < 25) return;
+            navigator.clipboard.writeText(fullKey).then(() => {
+                const btn = document.getElementById('btn-copy-key');
+                btn.classList.add('copied');
+                btn.querySelector('.material-icons').textContent = 'check';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.querySelector('.material-icons').textContent = 'content_copy';
+                }, 2000);
+            });
+        });
+
+        // Submit licence
+        document.getElementById('btn-submit-licence').addEventListener('click', () => {
+            const typeRadio = document.querySelector('input[name="licence-type"]:checked');
+            if (!typeRadio) {
+                highlightRadioGroup('licence-type');
+                return;
+            }
+
+            const fullKey = Array.from(segments).map(s => s.value).join('-');
+            if (fullKey.replace(/-/g, '').length < 25) {
+                segments[0].style.borderColor = '#e74c3c';
+                return;
+            }
+
+            const count = parseInt(document.getElementById('licence-count').value) || 1;
+
+            const licence = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                type: typeRadio.value,
+                key: fullKey,
+                totalUses: count,
+                usedCount: 0,
+                addedAt: new Date().toISOString(),
+            };
+
+            // Save to localStorage
+            const licences = JSON.parse(localStorage.getItem('licences') || '[]');
+            licences.push(licence);
+            localStorage.setItem('licences', JSON.stringify(licences));
+
+            // Show success
+            const formContainer = licenceContainer.querySelector('.form-container');
+            formContainer.innerHTML = `
+                <div class="success-message">
+                    <span class="material-icons">check_circle</span>
+                    <h2>Licence enregistrée !</h2>
+                    <p>La clé <strong>${fullKey}</strong> a été ajoutée avec <strong>${count}</strong> utilisation(s) disponible(s).</p>
+                    <button class="btn btn-primary btn-back-home" style="margin-top: 1.5rem;">
+                        <span class="material-icons">home</span> Retour à l'accueil
+                    </button>
+                </div>
+            `;
+            formContainer.querySelector('.btn-back-home').addEventListener('click', () => {
+                window.location.reload();
+            });
+        });
+    }
 });

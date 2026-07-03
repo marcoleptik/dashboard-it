@@ -12,6 +12,7 @@ const translations = {
         'home.subtitle': 'Que souhaitez-vous faire ?',
         'home.onboarding': "Formulaire d'onboarding",
         'home.material': 'Demande de matériel',
+        'home.licence': 'Ajouter une licence',
         'home.admin': 'Dashboard Admin',
         'home.logout': 'Déconnexion',
 
@@ -150,6 +151,7 @@ const translations = {
         'home.subtitle': 'What would you like to do?',
         'home.onboarding': 'Onboarding form',
         'home.material': 'Equipment request',
+        'home.licence': 'Add a licence',
         'home.admin': 'Admin Dashboard',
         'home.logout': 'Log out',
 

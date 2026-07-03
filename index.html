@@ -38,6 +38,10 @@
                     <span class="material-icons">devices</span>
                     <span data-i18n="home.material">Demande de matériel</span>
                 </button>
+                <button class="btn btn-primary btn-home" id="btn-go-licence">
+                    <span class="material-icons">vpn_key</span>
+                    <span data-i18n="home.licence">Ajouter une licence</span>
+                </button>
                 <a href="admin.html" class="btn btn-primary btn-home" id="btn-go-admin" style="display:none;">
                     <span class="material-icons">dashboard</span>
                     <span data-i18n="home.admin">Dashboard Admin</span>
@@ -717,6 +721,90 @@
                     </button>
                     <button type="button" class="btn btn-success" id="btn-submit-material" style="display:none;">
                         <span class="material-icons">check_circle</span> <span data-i18n="mat.submit">Soumettre la demande</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Licence Form -->
+    <div class="material-container" id="licence-container" style="display:none;">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="assets/rs_logo.jpg" alt="Recommerce" class="logo-img">
+                <span class="logo-sub">Licences</span>
+            </div>
+            <nav class="step-nav">
+                <ul>
+                    <li class="step-item active"><span class="step-number">1</span><span class="step-label">Ajouter une licence</span></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user-email" id="sidebar-user-email-licence"></div>
+                <a href="#" class="sidebar-link btn-back-home">
+                    <span class="material-icons">home</span>
+                    <span data-i18n="sidebar.back">Retour à l'accueil</span>
+                </a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="form-container">
+                <section class="form-step active">
+                    <div class="step-header">
+                        <h1>Ajouter une clé de licence</h1>
+                        <p>Enregistrez une nouvelle clé de licence Windows ou Office</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Type de licence <span class="required">*</span></label>
+                            <div class="radio-group large-cards">
+                                <label class="radio-card">
+                                    <input type="radio" name="licence-type" value="Windows 11 Pro">
+                                    <span class="radio-card-content">
+                                        <svg class="os-logo" viewBox="0 0 24 24" width="24" height="24"><path fill="#0078D4" d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+                                        <strong>Windows 11 Pro</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="licence-type" value="Microsoft Office 365">
+                                    <span class="radio-card-content">
+                                        <svg class="os-logo" viewBox="0 0 24 24" width="24" height="24"><path fill="#D83B01" d="M0 0v24l24-4V4L0 0zm15 18l-9-1V7l9-3v14z"/></svg>
+                                        <strong>Microsoft Office 365</strong>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Clé de licence <span class="required">*</span></label>
+                            <div class="licence-key-input">
+                                <input type="text" class="licence-key-segment" id="key-seg-1" maxlength="5" placeholder="XXXXX" data-segment="1">
+                                <span class="licence-key-sep">—</span>
+                                <input type="text" class="licence-key-segment" id="key-seg-2" maxlength="5" placeholder="XXXXX" data-segment="2">
+                                <span class="licence-key-sep">—</span>
+                                <input type="text" class="licence-key-segment" id="key-seg-3" maxlength="5" placeholder="XXXXX" data-segment="3">
+                                <span class="licence-key-sep">—</span>
+                                <input type="text" class="licence-key-segment" id="key-seg-4" maxlength="5" placeholder="XXXXX" data-segment="4">
+                                <span class="licence-key-sep">—</span>
+                                <input type="text" class="licence-key-segment" id="key-seg-5" maxlength="5" placeholder="XXXXX" data-segment="5">
+                                <button type="button" class="btn-copy-key" id="btn-copy-key" title="Copier la clé">
+                                    <span class="material-icons">content_copy</span>
+                                </button>
+                            </div>
+                            <p class="form-hint">Format : XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="licence-count">Nombre d'utilisations <span class="required">*</span></label>
+                            <input type="number" id="licence-count" name="licence-count" min="1" value="1" required placeholder="1">
+                            <p class="form-hint">Combien de fois cette clé peut être activée</p>
+                        </div>
+                    </div>
+                </section>
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary btn-back-home">
+                        <span class="material-icons">arrow_back</span> Retour
+                    </button>
+                    <button type="button" class="btn btn-success" id="btn-submit-licence">
+                        <span class="material-icons">vpn_key</span> Enregistrer la licence
                     </button>
                 </div>
             </div>

@@ -332,4 +332,137 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderMaterial();
+
+    // ===== Licences Tab =====
+    function getLicences() {
+        return JSON.parse(localStorage.getItem('licences') || '[]');
+    }
+
+    function saveLicences(licences) {
+        localStorage.setItem('licences', JSON.stringify(licences));
+    }
+
+    function renderLicences() {
+        const licences = getLicences();
+        const winLicences = licences.filter(l => l.type === 'Windows 11 Pro');
+        const officeLicences = licences.filter(l => l.type === 'Microsoft Office 365');
+
+        // Windows stats
+        const winTotal = winLicences.reduce((sum, l) => sum + l.totalUses, 0);
+        const winUsed = winLicences.reduce((sum, l) => sum + l.usedCount, 0);
+        document.getElementById('licence-win-total').textContent = winTotal;
+        document.getElementById('licence-win-used').textContent = winUsed;
+        document.getElementById('licence-win-available').textContent = winTotal - winUsed;
+
+        // Office stats
+        const officeTotal = officeLicences.reduce((sum, l) => sum + l.totalUses, 0);
+        const officeUsed = officeLicences.reduce((sum, l) => sum + l.usedCount, 0);
+        document.getElementById('licence-office-total').textContent = officeTotal;
+        document.getElementById('licence-office-used').textContent = officeUsed;
+        document.getElementById('licence-office-available').textContent = officeTotal - officeUsed;
+
+        // Render Windows table
+        renderLicenceTable('licence-win-body', 'no-licence-win', winLicences);
+        // Render Office table
+        renderLicenceTable('licence-office-body', 'no-licence-office', officeLicences);
+    }
+
+    function renderLicenceTable(tbodyId, emptyId, licences) {
+        const tbody = document.getElementById(tbodyId);
+        const empty = document.getElementById(emptyId);
+
+        if (licences.length === 0) {
+            tbody.innerHTML = '';
+            empty.style.display = 'flex';
+            return;
+        }
+
+        empty.style.display = 'none';
+        tbody.innerHTML = licences.map(l => {
+            const remaining = l.totalUses - l.usedCount;
+            const exhausted = remaining <= 0;
+            return `
+                <tr>
+                    <td>
+                        <span class="licence-key-display" data-key="${escapeHtml(l.key)}" title="Cliquer pour copier">
+                            <span class="material-icons">content_copy</span>
+                            ${escapeHtml(l.key)}
+                        </span>
+                    </td>
+                    <td>${escapeHtml(l.type)}</td>
+                    <td>
+                        <span class="licence-count-badge ${exhausted ? 'exhausted' : ''}">
+                            ${l.usedCount} / ${l.totalUses} utilisée(s)
+                        </span>
+                    </td>
+                    <td><span class="badge">${exhausted ? 'Épuisée' : 'Disponible'}</span></td>
+                    <td class="actions-cell">
+                        ${!exhausted ? `
+                            <button class="btn-icon" title="Utiliser une licence" data-action="use-licence" data-id="${l.id}">
+                                <span class="material-icons">remove_circle_outline</span>
+                            </button>
+                        ` : ''}
+                        ${l.usedCount > 0 ? `
+                            <button class="btn-icon" title="Libérer une licence" data-action="free-licence" data-id="${l.id}">
+                                <span class="material-icons">add_circle_outline</span>
+                            </button>
+                        ` : ''}
+                        <button class="btn-icon btn-icon-danger" title="Supprimer" data-action="delete-licence" data-id="${l.id}">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Copy key on click
+        tbody.querySelectorAll('.licence-key-display').forEach(el => {
+            el.addEventListener('click', () => {
+                navigator.clipboard.writeText(el.dataset.key).then(() => {
+                    const icon = el.querySelector('.material-icons');
+                    icon.textContent = 'check';
+                    setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+                });
+            });
+        });
+
+        // Use licence
+        tbody.querySelectorAll('[data-action="use-licence"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const licences = getLicences();
+                const lic = licences.find(l => l.id === btn.dataset.id);
+                if (lic && lic.usedCount < lic.totalUses) {
+                    lic.usedCount++;
+                    saveLicences(licences);
+                    renderLicences();
+                }
+            });
+        });
+
+        // Free licence
+        tbody.querySelectorAll('[data-action="free-licence"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const licences = getLicences();
+                const lic = licences.find(l => l.id === btn.dataset.id);
+                if (lic && lic.usedCount > 0) {
+                    lic.usedCount--;
+                    saveLicences(licences);
+                    renderLicences();
+                }
+            });
+        });
+
+        // Delete licence
+        tbody.querySelectorAll('[data-action="delete-licence"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (confirm('Supprimer cette licence ?')) {
+                    const licences = getLicences().filter(l => l.id !== btn.dataset.id);
+                    saveLicences(licences);
+                    renderLicences();
+                }
+            });
+        });
+    }
+
+    renderLicences();
 });

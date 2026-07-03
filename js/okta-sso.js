@@ -259,12 +259,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+            // Licence button → show licence section
+            const licenceBtn = document.getElementById('btn-go-licence');
+            const licenceContainer = document.getElementById('licence-container');
+            if (licenceBtn && licenceContainer) {
+                licenceBtn.addEventListener('click', () => {
+                    homeScreen.style.display = 'none';
+                    licenceContainer.style.display = 'flex';
+                    const licSidebarFooter = licenceContainer.querySelector('.sidebar-footer');
+                    if (licSidebarFooter) {
+                        licSidebarFooter.innerHTML = `
+                            <div class="sso-user-info">
+                                <span class="material-icons sso-avatar-icon">account_circle</span>
+                                <div class="sso-user-details">
+                                    <span class="sso-user-name">${escapeHtml(session.name)}</span>
+                                    <span class="sso-user-email">${escapeHtml(session.email)}</span>
+                                </div>
+                            </div>
+                            <a href="#" class="sidebar-link btn-back-home"><span class="material-icons">home</span><span>Retour à l'accueil</span></a>
+                        `;
+                        licSidebarFooter.querySelector('.btn-back-home').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            licenceContainer.style.display = 'none';
+                            homeScreen.style.display = 'flex';
+                        });
+                    }
+                });
+            }
+
             // All "back to home" buttons (class-based)
             document.querySelectorAll('.btn-back-home').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     appContainer.style.display = 'none';
                     if (materialContainer) materialContainer.style.display = 'none';
+                    if (licenceContainer) licenceContainer.style.display = 'none';
                     homeScreen.style.display = 'flex';
                 });
             });
