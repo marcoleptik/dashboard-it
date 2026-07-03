@@ -17,6 +17,7 @@
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.14);
     --radius-sm: 10px;
     --radius-md: 14px;
     --radius-lg: 18px;
@@ -24,10 +25,15 @@
     --transition-fast: all 0.1s ease-out;
     --transition-medium: all 0.2s ease-out;
     --transition-slow: all 0.3s ease-out;
+    --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --focus-ring: 0 0 0 3px rgba(45, 116, 116, 0.3);
     --pastel-teal: #e8f4f4;
     --pastel-mint: #eef7f7;
     --pastel-blue: #f0f7ff;
+    --glow-primary: 0 0 20px rgba(45, 116, 116, 0.15);
+    --glow-accent: 0 0 20px rgba(229, 146, 46, 0.15);
 }
 
 * {
@@ -203,16 +209,10 @@ body {
 /* Form Steps */
 .form-step {
     display: none;
-    animation: fadeIn 0.3s ease;
 }
 
 .form-step.active {
     display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Form Grid */
@@ -261,7 +261,7 @@ textarea {
     font-family: inherit;
     color: var(--text-primary);
     background: var(--bg-card);
-    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.1s ease-out;
+    transition: border-color 0.3s var(--ease-premium), box-shadow 0.3s var(--ease-premium), transform 0.15s var(--ease-premium);
     outline: none;
 }
 
@@ -271,7 +271,7 @@ input[type="date"]:focus,
 select:focus,
 textarea:focus {
     border-color: var(--border-focus);
-    box-shadow: var(--focus-ring);
+    box-shadow: var(--focus-ring), var(--glow-primary);
     transform: scale(1.01);
 }
 
@@ -502,18 +502,42 @@ textarea::placeholder {
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s ease-out, color 0.2s ease-out, transform 0.15s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+    transition: background 0.25s var(--ease-premium), color 0.2s ease-out, transform 0.2s var(--ease-premium), box-shadow 0.3s var(--ease-premium), border-color 0.2s ease-out;
     font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect on hover */
+.btn-primary::before,
+.btn-success::before,
+.btn-home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s var(--ease-premium);
+    pointer-events: none;
+}
+
+.btn-primary:hover::before,
+.btn-success:hover::before,
+.btn-home:hover::before {
+    left: 100%;
 }
 
 .btn:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
     transition-duration: 0.1s;
 }
 
 .btn:focus-visible {
     outline: none;
     box-shadow: var(--focus-ring);
+    animation: focusRingPulse 0.3s var(--ease-premium);
 }
 
 .btn .material-icons {
@@ -528,8 +552,8 @@ textarea::placeholder {
 
 .btn-primary:hover {
     background: var(--primary-light);
-    box-shadow: 0 4px 14px rgba(45, 116, 116, 0.35);
-    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(45, 116, 116, 0.35);
+    transform: scale(1.04) translateY(-1px);
 }
 
 .btn-secondary {
@@ -560,12 +584,13 @@ textarea::placeholder {
     background: var(--accent);
     color: white;
     font-weight: 600;
+    box-shadow: 0 2px 8px rgba(229, 146, 46, 0.25);
 }
 
 .btn-success:hover {
     background: var(--accent-dark);
-    box-shadow: var(--shadow-md);
-    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(229, 146, 46, 0.35);
+    transform: scale(1.04) translateY(-1px);
 }
 
 /* Summary */
@@ -1129,6 +1154,8 @@ textarea::placeholder {
     justify-content: center;
     z-index: 1000;
     padding: 2rem;
+    backdrop-filter: blur(4px);
+    animation: overlayFadeIn 0.25s var(--ease-premium);
 }
 
 .modal-content {
@@ -1139,6 +1166,7 @@ textarea::placeholder {
     max-height: 80vh;
     overflow-y: auto;
     box-shadow: var(--shadow-lg);
+    animation: modalSlideIn 0.3s var(--ease-bounce);
 }
 
 .modal-header {
@@ -1630,28 +1658,6 @@ textarea::placeholder {
     transition-duration: 0.1s;
 }
 
-/* ===== Loading state for submit button ===== */
-.btn.is-loading {
-    pointer-events: none;
-    opacity: 0.7;
-    position: relative;
-}
-
-.btn.is-loading::after {
-    content: '';
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-    border-top-color: currentColor;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    margin-left: 0.5rem;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 /* ===== Mailing list entry appearance ===== */
 .mailing-list-entry {
     animation: slideIn 0.25s ease-out;
@@ -1684,22 +1690,24 @@ textarea::placeholder {
 
 /* ===== App category cards ===== */
 .app-category {
-    transition: box-shadow 0.25s ease-out, transform 0.2s ease-out;
+    transition: box-shadow 0.3s var(--ease-premium), transform 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium);
 }
 
 .app-category:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+    border-color: var(--primary-light);
 }
 
 /* ===== Summary section cards ===== */
 .summary-section {
-    transition: box-shadow 0.25s ease-out, transform 0.2s ease-out;
+    transition: box-shadow 0.3s var(--ease-premium), transform 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium);
 }
 
 .summary-section:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    transform: translateY(-3px);
+    border-color: var(--primary-light);
 }
 
 /* ===== Summary tags ===== */
@@ -1715,7 +1723,210 @@ textarea::placeholder {
 /* ===== SSO Card & Home Card entrance ===== */
 .sso-card,
 .home-card {
-    animation: cardAppear 0.4s ease-out;
+    animation: cardAppear 0.5s var(--ease-out-expo);
+}
+
+/* Home action buttons staggered entrance */
+.home-actions .btn-home:nth-child(1) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.1s both; }
+.home-actions .btn-home:nth-child(2) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.18s both; }
+.home-actions .btn-home:nth-child(3) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.26s both; }
+.home-actions .btn-home:nth-child(4) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.34s both; }
+.home-actions .btn-home:nth-child(5) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.42s both; }
+.home-actions .btn-home:nth-child(6) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.50s both; }
+.home-actions .btn-home:nth-child(7) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.58s both; }
+.home-actions .btn-home:nth-child(8) { animation: fadeSlideUp 0.4s var(--ease-out-expo) 0.66s both; }
+
+/* ===== Premium Animations & Keyframes ===== */
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0);
+    }
+    to {
+        opacity: 1;
+        backdrop-filter: blur(4px);
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes focusRingPulse {
+    from {
+        box-shadow: 0 0 0 0 rgba(45, 116, 116, 0.4);
+    }
+    to {
+        box-shadow: var(--focus-ring);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(45, 116, 116, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(45, 116, 116, 0);
+    }
+}
+
+/* ===== Scroll Reveal (IntersectionObserver) ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+}
+
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.10s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.15s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.20s; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.25s; }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.30s; }
+.reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.35s; }
+.reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.40s; }
+
+.reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== Loading / Skeleton Shimmer ===== */
+.skeleton {
+    background: linear-gradient(90deg, var(--border) 25%, var(--pastel-mint) 50%, var(--border) 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: var(--radius-sm);
+}
+
+/* ===== Button loading state (enhanced) ===== */
+.btn.is-loading {
+    pointer-events: none;
+    position: relative;
+    color: transparent;
+}
+
+.btn.is-loading::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -9px;
+}
+
+/* ===== Radio/Checkbox card enhanced hover ===== */
+.radio-card-content,
+.checkbox-card-content {
+    transition: transform 0.2s var(--ease-premium), box-shadow 0.3s var(--ease-premium), border-color 0.2s var(--ease-premium), background 0.2s ease-out;
+}
+
+.radio-card-content:hover,
+.checkbox-card-content:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.radio-card-content:active,
+.checkbox-card-content:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+}
+
+/* ===== Form step transition (enhanced) ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step.active {
+    animation: fadeIn 0.4s var(--ease-out-expo);
+}
+
+/* ===== Success message animation ===== */
+.success-message {
+    animation: successPop 0.5s var(--ease-bounce);
+}
+
+@keyframes successPop {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-message .material-icons {
+    animation: pulseGlow 2s infinite;
+    border-radius: 50%;
+}
+
+/* ===== Section transitions (form sections sliding) ===== */
+.material-container,
+#licence-container {
+    animation: fadeSlideUp 0.4s var(--ease-out-expo);
+}
+
+/* ===== Sidebar glassmorphism ===== */
+.sidebar {
+    backdrop-filter: blur(10px);
+    transition: width 0.3s var(--ease-premium);
 }
 
 @keyframes cardAppear {
@@ -1731,16 +1942,18 @@ textarea::placeholder {
 
 /* ===== Home action buttons ===== */
 .btn-home {
-    transition: background 0.2s ease-out, transform 0.15s ease-out, box-shadow 0.2s ease-out, color 0.2s ease-out;
+    transition: background 0.25s var(--ease-premium), transform 0.25s var(--ease-premium), box-shadow 0.3s var(--ease-premium), color 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-home:hover {
-    transform: scale(1.03) translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: var(--shadow-hover);
 }
 
 .btn-home:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
     transition-duration: 0.1s;
 }
 
@@ -1783,6 +1996,12 @@ select {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    .reveal,
+    .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     .btn:hover,
