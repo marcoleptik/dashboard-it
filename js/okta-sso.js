@@ -159,10 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Créer la session
             const isAdmin = ADMIN_EMAILS.includes(payload.email.toLowerCase());
+            const groups = Array.isArray(payload.groups) ? payload.groups : [];
             const session = {
                 email: payload.email,
                 name: payload.name || payload.preferred_username || payload.email,
                 role: isAdmin ? 'admin' : 'member',
+                groups: groups,
                 loggedAt: Date.now(),
                 expiresAt: payload.exp * 1000,
             };
@@ -196,10 +198,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // Show admin button if admin
-            if (session.role === 'admin') {
+            // Group-based button visibility
+            const userGroups = session.groups || [];
+            const isSysOps = userGroups.includes('SysOps');
+            const isRH = userGroups.includes('RH');
+
+            // Admin dashboard: SysOps + RH
+            if (isSysOps || isRH || session.role === 'admin') {
                 const adminBtn = document.getElementById('btn-go-admin');
                 if (adminBtn) adminBtn.style.display = 'inline-flex';
+            }
+
+            // Licence: SysOps only
+            const licenceHomeBtn = document.getElementById('btn-go-licence');
+            if (licenceHomeBtn) {
+                licenceHomeBtn.style.display = isSysOps ? 'inline-flex' : 'none';
             }
 
             // Onboarding button → show form
