@@ -207,20 +207,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Group-based button visibility
             const userGroups = session.groups || [];
             console.log('[SSO] User groups:', JSON.stringify(userGroups));
-            const isSysOps = userGroups.includes('SysOps');
-            const isRH = userGroups.includes('RH');
-            console.log('[SSO] isSysOps:', isSysOps, '| isRH:', isRH);
+            const isITAdmin = userGroups.includes('Dashboard IT Admin');
+            console.log('[SSO] isITAdmin:', isITAdmin);
 
-            // Admin dashboard: SysOps + RH
-            if (isSysOps || isRH || session.role === 'admin') {
+            // Admin dashboard + Licence: Dashboard IT Admin only
+            if (isITAdmin || session.role === 'admin') {
                 const adminBtn = document.getElementById('btn-go-admin');
                 if (adminBtn) adminBtn.style.display = 'inline-flex';
             }
 
-            // Licence: SysOps only
+            // Licence: Dashboard IT Admin only
             const licenceHomeBtn = document.getElementById('btn-go-licence');
             if (licenceHomeBtn) {
-                licenceHomeBtn.style.display = isSysOps ? 'inline-flex' : 'none';
+                licenceHomeBtn.style.display = isITAdmin ? 'inline-flex' : 'none';
             }
 
             // Onboarding button → show form
