@@ -8,7 +8,7 @@ const OKTA_CONFIG = {
     orgUrl: 'https://login.recommerce.com',
     clientId: '0oak5r1481CKBgoeM0i7',
     redirectUri: window.location.origin + window.location.pathname,
-    scopes: ['openid', 'email', 'profile'],
+    scopes: ['openid', 'email', 'profile', 'groups'],
 };
 
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
