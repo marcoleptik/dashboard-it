@@ -1,10 +1,3 @@
-// Emails ayant accès aux onglets restreints (Licences, Stock PC, Fiscalité)
-const RESTRICTED_EMAILS = [
-    'marc.huteau@recommerce.com',
-    'gael.donat@recommerce.com',
-    'ange.bayoro@recommerce.com',
-];
-
 document.addEventListener('DOMContentLoaded', () => {
     // Check auth - support both legacy Auth and Okta SSO session
     const oktaSession = localStorage.getItem('onboarding_okta_session');
@@ -12,14 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (oktaSession) {
         session = JSON.parse(oktaSession);
-        if (session.role !== 'admin') {
-            alert('Accès réservé aux administrateurs.');
-            window.location.href = 'index.html';
-            return;
-        }
-    } else if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) {
-        session = Auth.getSession();
-        if (session.role !== 'admin') {
+        const userGroups = session.groups || [];
+        const isITAdmin = userGroups.includes('Dashboard IT Admin');
+        const isRH = userGroups.includes('Recommerce Solutions (FR) - Ressources Humaines');
+        if (!isITAdmin && !isRH) {
             alert('Accès réservé aux administrateurs.');
             window.location.href = 'index.html';
             return;
@@ -35,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-logout').addEventListener('click', (e) => {
         e.preventDefault();
         localStorage.removeItem('onboarding_okta_session');
-        if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) Auth.logout();
-        else window.location.href = 'index.html';
+        window.location.href = 'index.html';
     });
 
-    // Show restricted tabs if user has access
-    const hasRestrictedAccess = RESTRICTED_EMAILS.includes((session.email || '').toLowerCase());
-    if (hasRestrictedAccess) {
+    // Show restricted tabs if user is Dashboard IT Admin
+    const userGroups = session.groups || [];
+    const isITAdmin = userGroups.includes('Dashboard IT Admin');
+    if (isITAdmin) {
         document.querySelectorAll('.restricted-tab').forEach(tab => {
             tab.style.display = 'flex';
         });

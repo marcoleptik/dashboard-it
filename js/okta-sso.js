@@ -12,11 +12,6 @@ const OKTA_CONFIG = {
 };
 
 const ALLOWED_DOMAINS = ['recommerce.com', 'circularx.com'];
-const ADMIN_EMAILS = [
-    'marc.huteau@recommerce.com',
-    'gael.donat@recommerce.com',
-    'ange.bayoro@recommerce.com',
-];
 const OKTA_SESSION_KEY = 'onboarding_okta_session';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -164,12 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Créer la session
-            const isAdmin = ADMIN_EMAILS.includes(payload.email.toLowerCase());
             const groups = Array.isArray(payload.groups) ? payload.groups : [];
             const session = {
                 email: payload.email,
                 name: payload.name || payload.preferred_username || payload.email,
-                role: isAdmin ? 'admin' : 'member',
                 groups: groups,
                 loggedAt: Date.now(),
                 expiresAt: payload.exp * 1000,
@@ -212,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('[SSO] isITAdmin:', isITAdmin, '| isRH:', isRH);
 
             // Admin dashboard: Dashboard IT Admin + RH
-            if (isITAdmin || isRH || session.role === 'admin') {
+            if (isITAdmin || isRH) {
                 const adminBtn = document.getElementById('btn-go-admin');
                 if (adminBtn) adminBtn.style.display = 'inline-flex';
             }
@@ -333,7 +326,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const sidebarFooter = document.querySelector('.sidebar-footer');
         if (sidebarFooter) {
-            const adminLink = session.role === 'admin'
+            const userGroups = session.groups || [];
+            const showAdmin = userGroups.includes('Dashboard IT Admin') || userGroups.includes('Recommerce Solutions (FR) - Ressources Humaines');
+            const adminLink = showAdmin
                 ? `<a href="admin.html" class="sidebar-link"><span class="material-icons">dashboard</span><span>Dashboard Admin</span></a>`
                 : '';
             sidebarFooter.innerHTML = `
@@ -341,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="material-icons sso-avatar-icon">account_circle</span>
                     <div class="sso-user-details">
                         <span class="sso-user-name">${escapeHtml(session.name)}</span>
-                        <span class="sso-user-email">${escapeHtml(session.email)}${session.role === 'admin' ? ' (admin)' : ''}</span>
+                        <span class="sso-user-email">${escapeHtml(session.email)}</span>
                     </div>
                 </div>
                 ${adminLink}
