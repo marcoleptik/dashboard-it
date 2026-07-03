@@ -14,6 +14,9 @@ const translations = {
         'home.material': 'Demande de matériel',
         'home.licence': 'Ajouter une licence',
         'home.admin': 'Dashboard Admin',
+        'home.ticketN1': 'Ticket N1',
+        'home.ticketN2': 'Ticket N2',
+        'home.faq': 'FAQ',
         'home.logout': 'Déconnexion',
 
         // Sidebar steps
@@ -153,6 +156,9 @@ const translations = {
         'home.material': 'Equipment request',
         'home.licence': 'Add a licence',
         'home.admin': 'Admin Dashboard',
+        'home.ticketN1': 'Ticket N1',
+        'home.ticketN2': 'Ticket N2',
+        'home.faq': 'FAQ',
         'home.logout': 'Log out',
 
         // Sidebar steps
