@@ -208,10 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userGroups = session.groups || [];
             console.log('[SSO] User groups:', JSON.stringify(userGroups));
             const isITAdmin = userGroups.includes('Dashboard IT Admin');
-            console.log('[SSO] isITAdmin:', isITAdmin);
+            const isRH = userGroups.includes('Recommerce Solutions (FR) - Ressources Humaines');
+            console.log('[SSO] isITAdmin:', isITAdmin, '| isRH:', isRH);
 
-            // Admin dashboard + Licence: Dashboard IT Admin only
-            if (isITAdmin || session.role === 'admin') {
+            // Admin dashboard: Dashboard IT Admin + RH
+            if (isITAdmin || isRH || session.role === 'admin') {
                 const adminBtn = document.getElementById('btn-go-admin');
                 if (adminBtn) adminBtn.style.display = 'inline-flex';
             }
